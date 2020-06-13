@@ -12,11 +12,11 @@ entity or8way_gate is
 end or8way_gate;
 
 architecture rtl of or8way_gate is
-    signal or1, or2, or3, or4, or5, or6 : std_logic;
+    	signal or1, or2, or3, or4, or5, or6 : std_logic;
 
-    --  Declaration of the component that will be instantiated.
+	--  Declaration of the component that will be instantiated.
 	component or_gate
-    port(
+    	port(
 		in0 : in std_logic;
 		in1 : in std_logic;
 		out0 : out std_logic
@@ -24,13 +24,13 @@ architecture rtl of or8way_gate is
 	end component;
 
 	--  Specifies which entity is bound with the component.
-    for or_gate_0 : or_gate use entity work.or_gate;
-    for or_gate_1 : or_gate use entity work.or_gate;
-    for or_gate_2 : or_gate use entity work.or_gate;
-    for or_gate_3 : or_gate use entity work.or_gate;
-    for or_gate_4 : or_gate use entity work.or_gate;
-    for or_gate_5 : or_gate use entity work.or_gate;
-    for or_gate_6 : or_gate use entity work.or_gate;
+	for or_gate_0 : or_gate use entity work.or_gate;
+	for or_gate_1 : or_gate use entity work.or_gate;
+	for or_gate_2 : or_gate use entity work.or_gate;
+	for or_gate_3 : or_gate use entity work.or_gate;
+	for or_gate_4 : or_gate use entity work.or_gate;
+	for or_gate_5 : or_gate use entity work.or_gate;
+	for or_gate_6 : or_gate use entity work.or_gate;
 
 begin
 	or_gate_0: or_gate port map (

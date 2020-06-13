@@ -33,15 +33,15 @@ architecture rtl of and_gate is
 	end component;
 
 	--  Specifies which entity is bound with the components.
-    for not_gate_0: not_gate use entity work.not_gate;
-    for nand_gate_0: nand_gate use entity work.nand_gate;
+	for not_gate_0: not_gate use entity work.not_gate;
+	for nand_gate_0: nand_gate use entity work.nand_gate;
 
 begin
 	nand_gate_0: nand_gate port map (
-        in0 => in0,
-        in1 => in1,
-        out0 => out_nand_0
-    );
+        	in0 => in0,
+        	in1 => in1,
+        	out0 => out_nand_0
+	);
 
 	not_gate_0: not_gate port map (
         in0 => out_nand_0,

@@ -26,7 +26,7 @@ architecture rtl of dmux8way_gate is
 	signal out_dmux_out0_out1_out2_out3 : std_logic;
 	signal out_dmux_out4_out5_out6_out7 : std_logic;
 
-    --  Declaration of the component that will be instantiated.
+	--  Declaration of the component that will be instantiated.
 	component dmux_gate
         port (
             in0 : in std_logic;
@@ -34,7 +34,7 @@ architecture rtl of dmux8way_gate is
             out0 : out std_logic;
             out1 : out std_logic
         );
-    end component;
+	end component;
 
 	component dmux4way_gate
         port (
@@ -49,9 +49,9 @@ architecture rtl of dmux8way_gate is
 
 
 	--  Specifies which entity is bound with the component.
-    for dmux_gate_0 : dmux_gate use entity work.dmux_gate;
-    for dmux4way_gate_0 : dmux4way_gate use entity work.dmux4way_gate;
-    for dmux4way_gate_1 : dmux4way_gate use entity work.dmux4way_gate;
+	for dmux_gate_0 : dmux_gate use entity work.dmux_gate;
+	for dmux4way_gate_0 : dmux4way_gate use entity work.dmux4way_gate;
+	for dmux4way_gate_1 : dmux4way_gate use entity work.dmux4way_gate;
 
 begin
 	dmux_gate_0: dmux_gate port map (

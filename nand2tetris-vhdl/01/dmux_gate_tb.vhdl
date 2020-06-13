@@ -44,7 +44,6 @@ begin
 		(
 			('0', '0', '0', '0'),
 			('0', '1', '0', '0'),
-
 			('1', '0', '1', '0'),
 			('1', '1', '0', '1')
 		);
@@ -62,8 +61,6 @@ begin
 
 			assert out1 = patterns(i).out1
 			report "bad value(s) : out1 is " & std_logic'image(out1) & " while expected is " & std_logic'image(patterns(i).out1) severity error;
-
-
 		end loop;
 
 		assert false report "end of test" severity note;

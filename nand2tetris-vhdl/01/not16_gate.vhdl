@@ -13,7 +13,7 @@ end not16_gate;
 architecture rtl of not16_gate is
     --  Declaration of the component that will be instantiated.
 	component nand_gate
-    port(
+    	port(
 		in0 : in std_logic;
 		in1 : in std_logic;
 		out0 : out std_logic
@@ -21,22 +21,22 @@ architecture rtl of not16_gate is
 	end component;
 
 	--  Specifies which entity is bound with the component.
-    for nand_gate_0 : nand_gate use entity work.nand_gate;
-    for nand_gate_1 : nand_gate use entity work.nand_gate;
-    for nand_gate_2 : nand_gate use entity work.nand_gate;
-    for nand_gate_3 : nand_gate use entity work.nand_gate;
-    for nand_gate_4 : nand_gate use entity work.nand_gate;
-    for nand_gate_5 : nand_gate use entity work.nand_gate;
-    for nand_gate_6 : nand_gate use entity work.nand_gate;
-    for nand_gate_7 : nand_gate use entity work.nand_gate;
-    for nand_gate_8 : nand_gate use entity work.nand_gate;
-    for nand_gate_9 : nand_gate use entity work.nand_gate;
-    for nand_gate_10: nand_gate use entity work.nand_gate;
-    for nand_gate_11: nand_gate use entity work.nand_gate;
-    for nand_gate_12: nand_gate use entity work.nand_gate;
-    for nand_gate_13: nand_gate use entity work.nand_gate;
-    for nand_gate_14: nand_gate use entity work.nand_gate;
-    for nand_gate_15: nand_gate use entity work.nand_gate;
+	for nand_gate_0 : nand_gate use entity work.nand_gate;
+	for nand_gate_1 : nand_gate use entity work.nand_gate;
+	for nand_gate_2 : nand_gate use entity work.nand_gate;
+	for nand_gate_3 : nand_gate use entity work.nand_gate;
+	for nand_gate_4 : nand_gate use entity work.nand_gate;
+	for nand_gate_5 : nand_gate use entity work.nand_gate;
+	for nand_gate_6 : nand_gate use entity work.nand_gate;
+	for nand_gate_7 : nand_gate use entity work.nand_gate;
+	for nand_gate_8 : nand_gate use entity work.nand_gate;
+	for nand_gate_9 : nand_gate use entity work.nand_gate;
+	for nand_gate_10: nand_gate use entity work.nand_gate;
+	for nand_gate_11: nand_gate use entity work.nand_gate;
+	for nand_gate_12: nand_gate use entity work.nand_gate;
+	for nand_gate_13: nand_gate use entity work.nand_gate;
+	for nand_gate_14: nand_gate use entity work.nand_gate;
+	for nand_gate_15: nand_gate use entity work.nand_gate;
 
 begin
 	nand_gate_0: nand_gate port map (

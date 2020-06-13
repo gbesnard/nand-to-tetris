@@ -10,7 +10,7 @@ architecture behaviour of or8way_gate_tb is
 	component or8way_gate
 		port (
 			in0 : in std_logic_vector(0 to 7);
-        	out0 : out std_logic
+        		out0 : out std_logic
 		);
   	end component;
 

@@ -46,16 +46,16 @@ begin
 	--  This process does the real job.
 	process
 		type pattern_type is record
-			--  The inputs of the mux8way16_gate.
-			in0 : std_logic_vector(0 to 15);
-			in1 : std_logic_vector(0 to 15);
-			in2 : std_logic_vector(0 to 15);
-			in3 : std_logic_vector(0 to 15);
-			in4 : std_logic_vector(0 to 15);
-            in5 : std_logic_vector(0 to 15);
-            in6 : std_logic_vector(0 to 15);
-            in7 : std_logic_vector(0 to 15);
-            sel0 : std_logic_vector(0 to 2);
+		--  The inputs of the mux8way16_gate.
+		in0 : std_logic_vector(0 to 15);
+		in1 : std_logic_vector(0 to 15);
+		in2 : std_logic_vector(0 to 15);
+		in3 : std_logic_vector(0 to 15);
+		in4 : std_logic_vector(0 to 15);
+		in5 : std_logic_vector(0 to 15);
+		in6 : std_logic_vector(0 to 15);
+		in7 : std_logic_vector(0 to 15);
+		sel0 : std_logic_vector(0 to 2);
 			--  The expected outputs of the adder.
 			out0 : std_logic_vector(0 to 15);
 		end record;

@@ -30,13 +30,13 @@ architecture rtl of dmux4way_gate is
             out0 : out std_logic;
             out1 : out std_logic
         );
-    end component;
+	end component;
 
 
 	--  Specifies which entity is bound with the component.
-    for dmux_gate_0 : dmux_gate use entity work.dmux_gate;
-    for dmux_gate_1 : dmux_gate use entity work.dmux_gate;
-    for dmux_gate_2 : dmux_gate use entity work.dmux_gate;
+	for dmux_gate_0 : dmux_gate use entity work.dmux_gate;
+	for dmux_gate_1 : dmux_gate use entity work.dmux_gate;
+	for dmux_gate_2 : dmux_gate use entity work.dmux_gate;
 
 begin
 	dmux_gate_0: dmux_gate port map (

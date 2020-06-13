@@ -115,10 +115,6 @@ begin
 			assert out6 = patterns(i).out6
 			report "bad value" severity error;
 
-
-
-
-
 		end loop;
 
 		assert false report "end of test" severity note;

@@ -15,7 +15,7 @@ end and16_gate;
 architecture rtl of and16_gate is
     --  Declaration of the component that will be instantiated.
 	component and_gate
-    port(
+	port(
 		in0 : in std_logic;
 		in1 : in std_logic;
 		out0 : out std_logic

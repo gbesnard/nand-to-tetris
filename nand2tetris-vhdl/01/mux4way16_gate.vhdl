@@ -22,9 +22,9 @@ architecture rtl of mux4way16_gate is
 	signal out_mux_in0_in1 : std_logic_vector(0 to 15);
 	signal out_mux_in2_in3 : std_logic_vector(0 to 15);
 
-    --  Declaration of the component that will be instantiated.
+	--  Declaration of the component that will be instantiated.
 	component mux16_gate
-    port(
+	port(
 		in0 : in std_logic_vector(0 to 15);
 		in1 : in std_logic_vector(0 to 15);
 		sel0 : in std_logic;
@@ -33,9 +33,9 @@ architecture rtl of mux4way16_gate is
 	end component;
 
 	--  Specifies which entity is bound with the component.
-    for mux16_gate_0 : mux16_gate use entity work.mux16_gate;
-    for mux16_gate_1 : mux16_gate use entity work.mux16_gate;
-    for mux16_gate_2 : mux16_gate use entity work.mux16_gate;
+	for mux16_gate_0 : mux16_gate use entity work.mux16_gate;
+	for mux16_gate_1 : mux16_gate use entity work.mux16_gate;
+	for mux16_gate_2 : mux16_gate use entity work.mux16_gate;
 
 begin
 	mux16_gate_0: mux16_gate port map (

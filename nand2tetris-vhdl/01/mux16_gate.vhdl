@@ -17,7 +17,7 @@ end mux16_gate;
 architecture rtl of mux16_gate is
     --  Declaration of the component that will be instantiated.
 	component mux_gate
-    port(
+    	port(
 		in0 : in std_logic;
 		in1 : in std_logic;
 		sel0 : in std_logic;
@@ -26,22 +26,22 @@ architecture rtl of mux16_gate is
 	end component;
 
 	--  Specifies which entity is bound with the component.
-    for mux_gate_0 : mux_gate use entity work.mux_gate;
-    for mux_gate_1 : mux_gate use entity work.mux_gate;
-    for mux_gate_2 : mux_gate use entity work.mux_gate;
-    for mux_gate_3 : mux_gate use entity work.mux_gate;
-    for mux_gate_4 : mux_gate use entity work.mux_gate;
-    for mux_gate_5 : mux_gate use entity work.mux_gate;
-    for mux_gate_6 : mux_gate use entity work.mux_gate;
-    for mux_gate_7 : mux_gate use entity work.mux_gate;
-    for mux_gate_8 : mux_gate use entity work.mux_gate;
-    for mux_gate_9 : mux_gate use entity work.mux_gate;
-    for mux_gate_10: mux_gate use entity work.mux_gate;
-    for mux_gate_11: mux_gate use entity work.mux_gate;
-    for mux_gate_12: mux_gate use entity work.mux_gate;
-    for mux_gate_13: mux_gate use entity work.mux_gate;
-    for mux_gate_14: mux_gate use entity work.mux_gate;
-    for mux_gate_15: mux_gate use entity work.mux_gate;
+	for mux_gate_0 : mux_gate use entity work.mux_gate;
+	for mux_gate_1 : mux_gate use entity work.mux_gate;
+	for mux_gate_2 : mux_gate use entity work.mux_gate;
+	for mux_gate_3 : mux_gate use entity work.mux_gate;
+	for mux_gate_4 : mux_gate use entity work.mux_gate;
+	for mux_gate_5 : mux_gate use entity work.mux_gate;
+	for mux_gate_6 : mux_gate use entity work.mux_gate;
+	for mux_gate_7 : mux_gate use entity work.mux_gate;
+	for mux_gate_8 : mux_gate use entity work.mux_gate;
+	for mux_gate_9 : mux_gate use entity work.mux_gate;
+	for mux_gate_10: mux_gate use entity work.mux_gate;
+	for mux_gate_11: mux_gate use entity work.mux_gate;
+	for mux_gate_12: mux_gate use entity work.mux_gate;
+	for mux_gate_13: mux_gate use entity work.mux_gate;
+	for mux_gate_14: mux_gate use entity work.mux_gate;
+	for mux_gate_15: mux_gate use entity work.mux_gate;
 
 begin
 	mux_gate_0: mux_gate port map (
