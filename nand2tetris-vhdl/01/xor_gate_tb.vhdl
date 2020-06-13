@@ -1,13 +1,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity and_gate_tb is
+entity xor_gate_tb is
 --  A testbench has no ports.
-end and_gate_tb;
+end xor_gate_tb;
 
-architecture behaviour of and_gate_tb is
+architecture behaviour of xor_gate_tb is
 	--  Declaration of the component that will be instantiated.
-	component and_gate
+	component xor_gate
 		port (
 			in0 : in std_logic; 
 			in1 : in std_logic; 
@@ -16,12 +16,12 @@ architecture behaviour of and_gate_tb is
   	end component;
 
 	--  Specifies which entity is bound with the component.
-	for and_gate_0: and_gate use entity work.and_gate;
+	for xor_gate_0: xor_gate use entity work.xor_gate;
 	signal in0, in1, out0 : std_logic;
 
 begin
 	--  Component instantiation.
-	and_gate_0: and_gate port map (
+	xor_gate_0: xor_gate port map (
 		in0 => in0, 
 		in1 => in1, 
 		out0 => out0
@@ -30,7 +30,7 @@ begin
 	--  This process does the real job.
 	process
 		type pattern_type is record
-			--  The inputs of the and_gate.
+			--  The inputs of the xor_gate.
 			in0, in1 : std_logic;
 			--  The expected outputs of the adder.
 			out0 : std_logic;
@@ -41,9 +41,9 @@ begin
 		constant patterns : pattern_array :=
 		(
 			('0', '0', '0'),
-			('0', '1', '0'),
-			('1', '0', '0'),
-			('1', '1', '1')
+			('0', '1', '1'),
+			('1', '0', '1'),
+			('1', '1', '0')
 		);
 	begin
 		--  Check each pattern.
