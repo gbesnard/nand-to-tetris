@@ -1,66 +1,67 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity half_adder_tb is
---  A testbench has no ports.
-end half_adder_tb;
+library work;
+use work.std_logic_vector_to_string_package.all;
 
-architecture behaviour of half_adder_tb is
+entity inc16_tb is
+--  A testbench has no ports.
+end inc16_tb;
+
+architecture behaviour of inc16_tb is
 	--  Declaration of the component that will be instantiated.
-	component half_adder
+	component inc16
 		port (
-			in0 : in std_logic;
-			in1 : in std_logic;
-			sum0 : out std_logic;
-			carry0 : out std_logic
+			in0 : in std_logic_vector(0 to 15); 
+			out0 : out std_logic_vector(0 to 15)
 		);
   	end component;
 
 	--  Specifies which entity is bound with the component.
-	for half_adder_0: half_adder use entity work.half_adder;
-	signal in0, in1, sum0, carry0 : std_logic;
+	for inc16_0: inc16 use entity work.inc16;
+	signal in0, out0 : std_logic_vector(0 to 15);
 
 begin
 	--  Component instantiation.
-	half_adder_0: half_adder port map (
+	inc16_0: inc16 port map (
 		in0 => in0, 
-		in1 => in1, 
-		sum0 => sum0,
-		carry0 => carry0
+		out0 => out0
 	);
 
 	--  This process does the real job.
 	process
 		type pattern_type is record
 			--  The inputs.
-			in0, in1 : std_logic;
+			in0 : std_logic_vector(0 to 15);
 			--  The expected outputs.
-			sum0, carry0 : std_logic;
+			out0 : std_logic_vector(0 to 15);
 		end record;
 
 		--  The patterns to apply.
 		type pattern_array is array (natural range <>) of pattern_type;
 		constant patterns : pattern_array :=
 		(
-			('0', '0', '0', '0'),
-			('0', '1', '1', '0'),
-			('1', '0', '1', '0'),
-			('1', '1', '0', '1')
+			("0000000000000000", "1000000000000000"),
+			("1111111111111111", "0000000000000000"),
+			("1010000000000000", "0110000000000000"),
+			("1101111111111111", "0011111111111111")
 		);
+
 	begin
 		--  Check each pattern.
 		for i in patterns'range loop
 			--  Set the inputs.
 			in0 <= patterns(i).in0;
-			in1 <= patterns(i).in1;
 			--  Wait for the results.
 			wait for 1 ns;
 			--  Check the outputs.
-			assert sum0 = patterns(i).sum0
-			report "bad value" severity error;
+			assert out0 = patterns(i).out0
+			report "bad value for i = " & integer'image(i) & 
+			" for input in0 = " & to_string(in0) & 
+			" and out0 = " & to_string(out0) &
+			" instead of " & to_string(patterns(i).out0)
 
-			assert carry0 = patterns(i).carry0
-			report "bad value" severity error;
+			severity error;
 		end loop;
 
 		assert false report "end of test" severity note;

@@ -1,6 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
+library work;
+use work.std_logic_vector_to_string_package.all;
+
 entity add16_tb is
 --  A testbench has no ports.
 end add16_tb;
@@ -19,17 +22,6 @@ architecture behaviour of add16_tb is
 	for add16_0: add16 use entity work.add16;
 	signal in0, in1, out0 : std_logic_vector(0 to 15);
 
-	function to_string ( a: std_logic_vector) return string is
-		variable b : string (1 to a'length) := (others => NUL);
-		variable stri : integer := 1; 
-		begin
-		    for i in a'range loop
-			b(stri) := std_logic'image(a((i)))(2);
-		    stri := stri+1;
-		    end loop;
-		return b;
-	end function;
-
 begin
 	--  Component instantiation.
 	add16_0: add16 port map (
@@ -41,10 +33,10 @@ begin
 	--  This process does the real job.
 	process
 		type pattern_type is record
-			--  The inputs of the add16_tb.
+			--  The inputs.
 			in0 : std_logic_vector(0 to 15);
 			in1 : std_logic_vector(0 to 15);
-			--  The expected outputs of the adder.
+			--  The expected outputs.
 			out0 : std_logic_vector(0 to 15);
 		end record;
 
@@ -72,7 +64,7 @@ begin
 			assert out0 = patterns(i).out0
 			report "bad value for i = " & integer'image(i) & 
 			" for input in0 = " & to_string(in0) & 
-			" and inb = " & to_string(in1) &
+			" and in1 = " & to_string(in1) &
 			" and out0 = " & to_string(out0) &
 			" instead of " & to_string(patterns(i).out0)
 

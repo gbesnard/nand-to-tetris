@@ -34,9 +34,9 @@ begin
 	--  This process does the real job.
 	process
 		type pattern_type is record
-			--  The inputs of the and_gate.
+			--  The inputs.
 			in0, in1, in2 : std_logic;
-			--  The expected outputs of the adder.
+			--  The expected outputs.
 			sum0, carry0 : std_logic;
 		end record;
 
