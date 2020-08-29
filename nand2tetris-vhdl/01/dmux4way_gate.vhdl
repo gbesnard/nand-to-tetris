@@ -21,8 +21,8 @@ end dmux4way_gate;
 architecture rtl of dmux4way_gate is
 	signal out_dmux_out0_out1 : std_logic;
 	signal out_dmux_out2_out3 : std_logic;
-
-    --  Declaration of the component that will be instantiated.
+	
+	--  Declaration of the component that will be instantiated.
 	component dmux_gate
         port (
             in0 : in std_logic;

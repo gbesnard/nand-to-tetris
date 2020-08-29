@@ -15,7 +15,7 @@ entity mux16_gate is
 end mux16_gate;
 
 architecture rtl of mux16_gate is
-    --  Declaration of the component that will be instantiated.
+	--  Declaration of the component that will be instantiated.
 	component mux_gate
     	port(
 		in0 : in std_logic;

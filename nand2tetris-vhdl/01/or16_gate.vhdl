@@ -13,7 +13,7 @@ entity or16_gate is
 end or16_gate;
 
 architecture rtl of or16_gate is
-    --  Declaration of the component that will be instantiated.
+	--  Declaration of the component that will be instantiated.
 	component or_gate
     	port(
 		in0 : in std_logic;

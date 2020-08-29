@@ -16,7 +16,7 @@ end and_gate;
 architecture rtl of and_gate is
 	signal out_nand_0 : std_logic;
 
-    --  Declaration of components that will be instantiated.
+	--  Declaration of components that will be instantiated.
 	component nand_gate
 		port(
 			in0 : in std_logic;

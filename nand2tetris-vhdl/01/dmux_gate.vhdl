@@ -17,7 +17,7 @@ end dmux_gate;
 architecture rtl of dmux_gate is
 	signal not_sel0 : std_logic;
 
-    --  Declaration of components that will be instantiated.
+	--  Declaration of components that will be instantiated.
 	component and_gate
 		port(
 			in0 : in std_logic;

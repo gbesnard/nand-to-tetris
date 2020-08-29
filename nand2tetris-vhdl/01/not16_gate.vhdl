@@ -11,7 +11,7 @@ entity not16_gate is
 end not16_gate;
 
 architecture rtl of not16_gate is
-    --  Declaration of the component that will be instantiated.
+	--  Declaration of the component that will be instantiated.
 	component nand_gate
     	port(
 		in0 : in std_logic;
