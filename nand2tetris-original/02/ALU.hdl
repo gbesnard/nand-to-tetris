@@ -55,12 +55,12 @@ CHIP ALU {
 
 	/* step 4: if (ny == 1) set y = !y */
 	Not16 (in=ytmp, out=notytmp);
-    Mux16 (a=ytmp, b=notytmp, sel=ny, out=ywised);
+	Mux16 (a=ytmp, b=notytmp, sel=ny, out=ywised);
 
 	/* step 5: if (f == 1)  set out = x + y, else if (f == 0) set out = x & y */
 	Add16 (a=xwised, b=ywised, out=xplusy);
 	And16 (a=xwised, b=ywised, out=xandy);
-    Mux16 (a=xandy, b=xplusy, sel=f, out=fout);
+	Mux16 (a=xandy, b=xplusy, sel=f, out=fout);
 
 	/* step 6: if (no == 1) set out = !out, if (out < 0) set ng = 1 */
 	Not16 (in=fout, out=notfout);
