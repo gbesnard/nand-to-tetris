@@ -39,15 +39,15 @@ architecture rtl of full_adder is
 
 begin
 	half_adder_0: half_adder port map (
-        	in0 => in0,
-        	in1 => in1,
+        in0 => in0,
+        in1 => in1,
 		sum0 => half_sum0,
 		carry0 => half_carry0
 	);
 
 	half_adder_1: half_adder port map (
-        	in0 => half_sum0,
-        	in1 => in2,
+        in0 => half_sum0,
+        in1 => in2,
 		sum0 => sum0,
 		carry0 => half_carry1
 	);
@@ -56,6 +56,6 @@ begin
 		in0 => half_carry0,
 		in1 => half_carry1,
 		out0 => carry0
-    	);
+    );
 
 end rtl;
