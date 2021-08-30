@@ -1,4 +1,0 @@
-TODO:
-Maybe a problem in byte order on test benches
-I inverted byte order (compared to the original nand2tetris test files) for the following test benches arrays :
-	- add16

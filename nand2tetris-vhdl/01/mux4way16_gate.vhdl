@@ -41,21 +41,21 @@ begin
 	mux16_gate_0: mux16_gate port map (
 		in0 => in0, 
 		in1 => in1, 
-		sel0 => sel0(0), 
+		sel0 => sel0(1), 
 		out0 => out_mux_in0_in1
 	);
 
 	mux16_gate_1: mux16_gate port map (
 		in0 => in2, 
 		in1 => in3, 
-		sel0 => sel0(0), 
+		sel0 => sel0(1), 
 		out0 => out_mux_in2_in3
 	);
 
 	mux16_gate_2: mux16_gate port map (
 		in0 => out_mux_in0_in1, 
 		in1 => out_mux_in2_in3, 
-		sel0 => sel0(1), 
+		sel0 => sel0(0), 
 		out0 => out0
 	);
 

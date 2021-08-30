@@ -56,14 +56,14 @@ architecture rtl of dmux8way_gate is
 begin
 	dmux_gate_0: dmux_gate port map (
 		in0 => in0, 
-		sel0 => sel0(2), 
+		sel0 => sel0(0), 
 		out0 => out_dmux_out0_out1_out2_out3, 
 		out1 => out_dmux_out4_out5_out6_out7 
 	);
 
 	dmux4way_gate_0: dmux4way_gate port map (
 		in0 => out_dmux_out0_out1_out2_out3, 
-		sel0 => sel0(0 to 1), 
+		sel0 => sel0(1 to 2), 
 		out0 => out0, 
 		out1 => out1,
 		out2 => out2,
@@ -72,7 +72,7 @@ begin
 
 	dmux4way_gate_1: dmux4way_gate port map (
 		in0 => out_dmux_out4_out5_out6_out7, 
-		sel0 => sel0(0 to 1), 
+		sel0 => sel0(1 to 2), 
 		out0 => out4, 
 		out1 => out5,
 		out2 => out6,

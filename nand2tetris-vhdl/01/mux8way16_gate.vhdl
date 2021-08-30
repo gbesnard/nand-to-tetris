@@ -58,7 +58,7 @@ begin
 		in1 => in1, 
 		in2 => in2, 
 		in3 => in3, 
-		sel0 => sel0(0 to 1), 
+		sel0 => sel0(1 to 2), 
 		out0 => out_mux_in0_in1_in2_in3
 	);
 
@@ -67,14 +67,14 @@ begin
 		in1 => in5, 
 		in2 => in6, 
 		in3 => in7, 
-		sel0 => sel0(0 to 1), 
+		sel0 => sel0(1 to 2), 
 		out0 => out_mux_in4_in5_in6_in7
 	);
 
 	mux16_gate_0: mux16_gate port map (
 		in0 => out_mux_in0_in1_in2_in3, 
 		in1 => out_mux_in4_in5_in6_in7, 
-		sel0 => sel0(2), 
+		sel0 => sel0(0), 
 		out0 => out0
 	);
 

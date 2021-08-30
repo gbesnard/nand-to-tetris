@@ -198,7 +198,7 @@ begin
 	out0 <= outtmp;
 
 	-- step 7: if (out < 0) set ng = 1
-	ng <= outtmp(15);
+	ng <= outtmp(0);
 
 	-- step 8: if (out == 0) set zr = 1
 	or8way_gate_0: or8way_gate port map (

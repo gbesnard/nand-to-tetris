@@ -27,9 +27,7 @@ if __name__ == "__main__":
 						else:
 							print('\"', end = '')
 
-						# Reverse bit order because it is 
-						# read in reverse in our VHDL test bench.
-						print (value[::-1], end = '')
+						print (value, end = '')
 
 						if len(value) == 1:
 							print('\'', end = '')

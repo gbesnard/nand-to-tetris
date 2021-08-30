@@ -41,21 +41,21 @@ architecture rtl of dmux4way_gate is
 begin
 	dmux_gate_0: dmux_gate port map (
 		in0 => in0, 
-		sel0 => sel0(1), 
+		sel0 => sel0(0), 
 		out0 => out_dmux_out0_out1, 
 		out1 => out_dmux_out2_out3 
 	);
 
 	dmux_gate_1: dmux_gate port map (
 		in0 => out_dmux_out0_out1, 
-		sel0 => sel0(0), 
+		sel0 => sel0(1), 
 		out0 => out0, 
 		out1 => out1 
 	);
 
 	dmux_gate_2: dmux_gate port map (
 		in0 => out_dmux_out2_out3, 
-		sel0 => sel0(0), 
+		sel0 => sel0(1), 
 		out0 => out2, 
 		out1 => out3 
 	);

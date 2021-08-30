@@ -1,7 +1,0 @@
-TODO:
-Maybe a problem in byte order on test benches
-I inverted byte order (compared to the original nand2tetris test files) for the "sel0" pins of the following gates' test benches :
-	- mux4way16
-	- mux8way16
-	- dmux4way
-	- dmux8way 
