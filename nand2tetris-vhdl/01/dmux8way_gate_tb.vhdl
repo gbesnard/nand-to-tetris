@@ -20,7 +20,6 @@ architecture behaviour of dmux8way_gate_tb is
 			out6 : out std_logic;
 			out7 : out std_logic
 		);
-
   	end component;
 
 	--  Specifies which entity is bound with the component.

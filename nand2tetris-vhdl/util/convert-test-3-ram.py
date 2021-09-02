@@ -2,6 +2,7 @@ import csv
 import sys
 
 if __name__ == "__main__":
+	
 	if len(sys.argv) != 2:
 		print("Helper script to convert original cmp file to list used in VHDL test benches")
 		print("Usage: python convert-test.py file.cmp")
@@ -22,6 +23,23 @@ if __name__ == "__main__":
 
 					if j != (len(row)-1):
 						value = value.strip()
+						
+						if j == 1:
+							if '+' in value:
+								value = '0'
+							else:
+								value = '1'
+
+						if j == 2 or j == 5:						
+							if value[0:1] == "-":
+								value = ((bin(int(value)+(1<<16)))[2:]).zfill(16)
+							else:
+								value = ((bin(int(value)))[2:]).zfill(16)
+
+						if j == 4:			
+							value = ((bin(int(value)))[2:]).zfill(3)
+
+
 						if len(value) == 1:
 							print('\'', end = '')
 						else:
