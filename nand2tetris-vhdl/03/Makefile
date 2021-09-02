@@ -1,4 +1,4 @@
-all: previous_components dff bit reg ram8
+all: previous_components dff bit reg ram8 ram64
 
 previous_components:
 	make -C ../01/
@@ -22,6 +22,10 @@ ram8:
 	ghdl -i --workdir=workdir ram8.vhdl ram8_tb.vhdl
 	ghdl -m --workdir=workdir ram8_tb
 
+ram64: 
+	ghdl -i --workdir=workdir ram64.vhdl ram64_tb.vhdl
+	ghdl -m --workdir=workdir ram64_tb
+
 clean:
 	make -C ../01/ clean
 	make -C ../02/ clean
@@ -33,9 +37,11 @@ test:
 	./bit_tb
 	./reg_tb
 	./ram8_tb
+	./ram64_tb
 
 wave:
 	ghdl -r dff_tb --wave=dff_wave.ghw --stop-time=1000us
-	ghdl -r bit_tb --wave=bit_wave.ghw --stop-time=1000us
-	ghdl -r reg_tb --wave=reg_wave.ghw --stop-time=1000us
-	ghdl -r ram8_tb --wave=ram8_wave.ghw --stop-time=1000us
+	ghdl -r bit_tb --wave=bit_wave.ghw
+	ghdl -r reg_tb --wave=reg_wave.ghw
+	ghdl -r ram8_tb --wave=ram8_wave.ghw
+	ghdl -r ram64_tb --wave=ram64_wave.ghw
