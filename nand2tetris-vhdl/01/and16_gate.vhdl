@@ -4,7 +4,6 @@ use ieee.std_logic_1164.all;
 entity and16_gate is
 	-- 16-bit And:
  	-- for i=0..15: out0[i] = (in0[i] and in1[i])
-
 	port (
 		in0 : in std_logic_vector(0 to 15); 
 		in1 : in std_logic_vector(0 to 15); 

@@ -5,7 +5,6 @@ entity and_gate is
 	-- And gate:
 	-- out0 = 1 if (in0 == 1 and in1 == 1)
 	-- 0 otherwise
-
 	port (
 		in0 : in std_logic; 
 		in1 : in std_logic; 

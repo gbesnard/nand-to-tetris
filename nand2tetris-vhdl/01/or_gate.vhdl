@@ -5,7 +5,6 @@ entity or_gate is
 	-- Or gate:
 	-- out = 1 if (in0 == 1 or in1 == 1)
 	-- 0 otherwise
-
 	port (
 		in0 : in std_logic; 
 		in1 : in std_logic; 

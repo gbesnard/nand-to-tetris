@@ -4,7 +4,6 @@ use ieee.std_logic_1164.all;
 entity xor_gate is
 	-- Xr gate:
 	-- out = not (in0 == in1)
-
 	port (
 		in0 : in std_logic; 
 		in1 : in std_logic; 

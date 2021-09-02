@@ -7,7 +7,6 @@ entity mux8way16_gate is
 	--        in1 if sel == 001
 	--        etc.
 	--        in7 if sel == 111
-
 	port (
 		in0 : in std_logic_vector(0 to 15); 
 		in1 : in std_logic_vector(0 to 15); 

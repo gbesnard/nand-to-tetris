@@ -5,7 +5,6 @@ entity mux16_gate is
 	-- 16-bit And:
  	-- for i=0..15: in0[i] if sel0 == 1
 	--              in1[i] if sel0 == 1
-
 	port (
 		in0 : in std_logic_vector(0 to 15); 
 		in1 : in std_logic_vector(0 to 15); 

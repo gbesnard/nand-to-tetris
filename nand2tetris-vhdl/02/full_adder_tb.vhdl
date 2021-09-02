@@ -53,6 +53,7 @@ begin
 			('1', '1', '0', '0', '1'),
 			('1', '1', '1', '1', '1')
 		);
+		
 	begin
 		--  Check each pattern.
 		for i in patterns'range loop

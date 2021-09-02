@@ -5,7 +5,6 @@ entity mux_gate is
 	-- Mux gate:
 	-- out = in0 if sel0 == 0
 	-- in1 otherwise
-
 	port (
 		in0 : in std_logic; 
 		in1 : in std_logic; 

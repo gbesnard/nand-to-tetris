@@ -249,6 +249,7 @@ begin
 			('1', "0101010101010101", '0', "110", "0101010101010101"),
 			('1', "0101010101010101", '0', "111", "0101010101010101")
 		);
+		
 	begin
 		--  Init pattern before test.
 		for i in init_patterns'range loop

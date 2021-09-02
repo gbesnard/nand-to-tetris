@@ -4,7 +4,6 @@ use ieee.std_logic_1164.all;
 entity or8way_gate is
 	-- 8-way Or:
 	-- out0 = (in0[0] or in0[1] or ... or in0[7])
-
 	port (
 		in0 : in std_logic_vector(0 to 7); 
 		out0 : out std_logic

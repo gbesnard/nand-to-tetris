@@ -7,7 +7,6 @@ entity dmux4way_gate is
 	--                            {0, in0, 0, 0} if sel0 == 01
 	--                            {0, 0, in0, 0} if sel0 == 10
 	--                            {0, 0, 0, in0} if sel0 == 11
-
 	port (
 		in0 : in std_logic; 
 		sel0 : in std_logic_vector(0 to 1); 

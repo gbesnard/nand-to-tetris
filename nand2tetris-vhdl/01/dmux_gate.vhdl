@@ -5,7 +5,6 @@ entity dmux_gate is
 	-- Demultiplexor gate:
 	-- {out0, out1} = {in0, 0} if sel0 == 0
 	-- {0, in0} if sel0 == 1
-
 	port (
 		in0 : in std_logic; 
 		sel0 : in std_logic; 
