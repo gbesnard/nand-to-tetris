@@ -7,7 +7,8 @@ entity dff is
 	port (
 		in0 : in std_logic;
 		clk : in std_logic;
-		out0 : out std_logic);
+		out0 : out std_logic
+	);
 end dff;
  
 architecture behavioral of dff is

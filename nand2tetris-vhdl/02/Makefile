@@ -1,6 +1,6 @@
-all: common_gates std_logic_vector_to_string_package half_adder full_adder add16 inc16 alu
+all: previous_components std_logic_vector_to_string_package half_adder full_adder add16 inc16 alu
 
-common_gates:
+previous_components:
 	make -C ../01/
 	cp ../01/workdir/* workdir/
 

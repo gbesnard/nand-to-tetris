@@ -41,38 +41,42 @@ begin
 	--  This process does the real job.
 	process
 		type pattern_type is record
-			--  The inputs of the dff.
+			--  The inputs.
 			in0 : std_logic;
-			--  The expected outputs of the adder.
+			--  The expected outputs.
 			out0 : std_logic;
 		end record;
 
+		--  The patterns to apply.
+		type pattern_array is array (natural range <>) of pattern_type;
+		constant patterns : pattern_array :=
+		(			
+			('1', '0'),
+			('1', '1'),
+			('0', '1'),
+			('0', '0'),
+			('1', '0'),
+			('1', '1'),
+			('0', '1'),
+			('0', '0')
+		);
 	begin
-		in0 <= '1';
-		wait for clk_period;
-		--  Check the outputs.
-		assert out0 = '1'
-		report "bad value" severity error;
-		wait for clk_period;
-
+		-- Init
 		in0 <= '0';
-		--  Check the outputs.
-		wait for clk_period;
-		assert out0 = '0'
-		report "bad value" severity error;
-
-		in0 <= '1';
-		wait for clk_period;
-		--  Check the outputs.
-		assert out0 = '1'
-		report "bad value" severity error;
 		wait for clk_period;
 
-		in0 <= '0';
-		--  Check the outputs.
-		wait for clk_period;
-		assert out0 = '0'
-		report "bad value" severity error;
+		--  Check each pattern.
+		for i in patterns'range loop
+			--  Set the inputs.
+			in0 <= patterns(i).in0;			
+			--  Check the outputs.			
+			assert out0 = patterns(i).out0			
+			report "bad value for i = " & integer'image(i)
+					& " out0 " & std_logic'image(out0) & " instead of " & std_logic'image(patterns(i).out0)
+			severity error;
+			--  Wait a block period.
+			wait for clk_period;
+		end loop;
 
 		assert false report "end of test" severity note;
 		--  Wait forever; this will finish the simulation.
