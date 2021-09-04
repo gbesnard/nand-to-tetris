@@ -1,4 +1,4 @@
-all: previous_components dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast
+all: previous_components dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast pc
 
 previous_components:
 	make -C ../01/
@@ -42,6 +42,10 @@ ram16k_fast:
 	ghdl -i --workdir=workdir -O3 ram16k_fast.vhdl ram16k_fast_tb.vhdl
 	ghdl -m --workdir=workdir -O3 ram16k_fast_tb
 
+pc:
+	ghdl -i --workdir=workdir -O3 pc.vhdl pc_tb.vhdl
+	ghdl -m --workdir=workdir -O3 pc_tb
+
 clean:
 	make -C ../01/ clean
 	make -C ../02/ clean
@@ -56,6 +60,7 @@ test:
 	./ram64_tb	
 	./ram16k_tb
 	./ram16k_fast_tb
+	./pc_tb
 
 wave:
 	ghdl -r dff_tb --wave=dff_wave.ghw --stop-time=1000us
@@ -67,3 +72,4 @@ wave:
 	ghdl -r ram4k_tb --wave=ram512_wave.ghw
 	ghdl -r ram16k_tb --wave=ram16k_wave.ghw
 	ghdl -r ram16k_fast_tb --wave=ram16k_fast_tb.ghw
+	ghdl -r pc_tb --wave=pc_tb.ghw
