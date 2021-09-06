@@ -4,7 +4,7 @@ all: std_logic_vector_to_string_package \
 	mux16_gate or8way_gate mux4way16_gate mux8way16_gate \
 	dmux4way_gate dmux8way_gate half_adder full_adder add16 inc16 \
 	alu dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast pc \
-	cpu
+	cpu rom32k \
 	light_clean
 
 std_logic_vector_to_string_package:
@@ -138,6 +138,10 @@ cpu:
 	ghdl -i --workdir=workdir -O3 src/cpu.vhdl tb/cpu_tb.vhdl
 	ghdl -m --workdir=workdir -O3 cpu_tb
 
+rom32k:
+	ghdl -i --workdir=workdir -fsynopsys -O3 src/rom32k.vhdl tb/rom32k_tb.vhdl
+	ghdl -m --workdir=workdir -fsynopsys -O3 rom32k_tb
+
 test:
 	./nand_gate_tb
 	./not_gate_tb
@@ -171,6 +175,7 @@ test:
 	./ram16k_fast_tb
 	./pc_tb
 	./cpu_tb
+	./rom32k_tb
 
 test_dump:
 	ghdl -r mux4way16_gate_tb --vcd=mux4way16_gate_tb.vcd
@@ -184,9 +189,10 @@ wave:
 	#ghdl -r ram512_tb --wave=ram512_wave.ghw
 	#ghdl -r ram4k_tb --wave=ram512_wave.ghw
 	#ghdl -r ram16k_tb --wave=ram16k_wave.ghw
-	ghdl -r ram16k_fast_tb --wave=ram16k_fast_tb.ghw
-	ghdl -r pc_tb --wave=pc_tb.ghw
-	ghdl -r cpu_tb --wave=cpu_tb.ghw
+	ghdl -r ram16k_fast_tb --wave=ram16k_fast_wave.ghw
+	ghdl -r pc_tb --wave=pc_wave.ghw
+	ghdl -r cpu_tb --wave=cpu_wave.ghw
+	ghdl -r rom32k_tb --wave=rom32k_wave.ghw
 
 light_clean:
 	rm -f e~*.o
