@@ -16,3 +16,10 @@ For VHDL :
 
 - ghdl
 - gtkwave
+
+## TODO 
+- Part > 4 for original nand2tetris.
+- Simple computer in VHDL with no IO.
+- Simple compiler for JACK.
+- Try to make an interactive simulation in VHDL following [https://www.fpgarelated.com/showarticle/20.php].
+- Try to port it to a real FPGA board.
