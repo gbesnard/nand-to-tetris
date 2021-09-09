@@ -30,7 +30,8 @@ entity cpu is
 		write_mem : out std_logic;
 		addr_mem : out std_logic_vector(0 to 15);
 		out_pc : out std_logic_vector(0 to 15);
-		out_dbg : out std_logic_vector(0 to 15)
+		out_d : out std_logic_vector(0 to 15);
+		out_a : out std_logic_vector(0 to 15)
 	);
 end cpu;
 
@@ -226,7 +227,7 @@ begin
 		out0 => l_out_reg_D
 	);
 
-	out_dbg <= l_out_reg_D;
+	out_d <= l_out_reg_D;
 
 	------------------------------------
 	-- STEP 2: Handle register A loading
@@ -264,6 +265,8 @@ begin
 
 	-- Output write mem if C instruction and if bit M set.
 	write_mem <= l_dest_bit_M;
+
+	out_a <= l_out_reg_A;
 
 	-----------------------------------
 	-- STEP 3: Handle PC inc or loading

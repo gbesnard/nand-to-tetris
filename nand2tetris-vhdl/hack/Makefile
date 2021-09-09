@@ -179,18 +179,16 @@ test:
 	./ram16k_fast_tb
 	./pc_tb
 	./cpu_tb
-	cp rom-programs/test-rom.hack init-rom.hack && ./rom32k_tb
-	cp rom-programs/add-rom.hack init-rom.hack && ./computer_tb --stop-time=1us
-	cp rom-programs/mult-rom.hack mult-rom.hack && ./computer_tb --stop-time=5us
+	cp rom-programs/test-rom.hack	init-rom.hack && ./rom32k_tb
+	cp rom-programs/add-rom.hack	init-rom.hack && ./computer_tb --stop-time=1us
+	cp rom-programs/mult-rom.hack	init-rom.hack && ./computer_tb --stop-time=2us
+	cp rom-programs/max-rom.hack	init-rom.hack && ./computer_tb --stop-time=2us
 
-test_dump:
-	ghdl -r mux4way16_gate_tb --vcd=mux4way16_gate_tb.vcd
-
-wave:	
-	ghdl -r ram16k_fast_tb --wave=ram16k_fast_wave.ghw
-	cp rom-programs/test-rom.hack init-rom.hack && ghdl -r rom32k_tb --wave=rom32k_wave.ghw
-	cp rom-programs/add-rom.hack init-rom.hack && ghdl -r computer_tb --wave=computer_add_wave.ghw --stop-time=1us
-	cp rom-programs/mult-rom.hack init-rom.hack && ghdl -r computer_tb --wave=computer_mult_wave.ghw --stop-time=5us
+wave:		
+	cp rom-programs/test-rom.hack 	init-rom.hack && ghdl -r rom32k_tb --wave=rom32k_wave.ghw
+	cp rom-programs/add-rom.hack	init-rom.hack && ghdl -r computer_tb --wave=computer_add_wave.ghw --stop-time=1us
+	cp rom-programs/mult-rom.hack 	init-rom.hack && ghdl -r computer_tb --wave=computer_mult_wave.ghw --stop-time=2us
+	cp rom-programs/max-rom.hack 	init-rom.hack && ghdl -r computer_tb --wave=computer_max_wave.ghw --stop-time=2us
 
 light_clean:
 	rm -f e~*.o

@@ -22,7 +22,8 @@ architecture behaviour of cpu_tb is
 			write_mem : out std_logic;
 			addr_mem : out std_logic_vector(0 to 15);
 			out_pc : out std_logic_vector(0 to 15);
-			out_dbg : out std_logic_vector(0 to 15)
+			out_d : out std_logic_vector(0 to 15);
+			out_a : out std_logic_vector(0 to 15)
 		);
 	end component;
 
@@ -36,7 +37,7 @@ architecture behaviour of cpu_tb is
 	signal write_mem : std_logic;
 	signal addr_mem : std_logic_vector(0 to 15);
 	signal out_pc : std_logic_vector(0 to 15);
-	signal out_dbg : std_logic_vector(0 to 15);
+	signal out_d : std_logic_vector(0 to 15);
 
 begin
 	--  Component instantiation.
@@ -49,7 +50,7 @@ begin
 		write_mem => write_mem,
 		addr_mem => addr_mem,
 		out_pc => out_pc,
-		out_dbg => out_dbg
+		out_d => out_d
 	);
 
 	--  This process does the real job.
@@ -66,7 +67,7 @@ begin
 			write_mem : std_logic;
 			addr_mem : std_logic_vector(0 to 15);
 			out_pc : std_logic_vector(0 to 15);
-			out_dbg : std_logic_vector(0 to 15);
+			out_d : std_logic_vector(0 to 15);
 		end record;
 		
 		type pattern_array is array (natural range <>) of pattern_type;
@@ -74,7 +75,7 @@ begin
 		--  The patterns to apply.
 		constant patterns : pattern_array :=
 		(	
-		--  clk , in_mem            , instruction       , rst, out_mem           , wr_m, addr_mem          , out_pc  		  , out_dbg (D register)						
+		--  clk , in_mem            , instruction       , rst, out_mem           , wr_m, addr_mem          , out_pc  		  , out_d					
 			('0', "0000000000000000", "0000000000000000", '1', "0000000000000000", '0', "0000000000000000", "0000000000000000", "0000000000000000"),
 			('1', "0000000000000000", "0000000000000000", '1', "0000000000000000", '0', "0000000000000000", "0000000000000000", "0000000000000000"),						
 			('0', "0000000000000000", "0011000000111001", '0', "0000000000000000", '0', "0000000000000000", "0000000000000000", "0000000000000000"),
@@ -201,9 +202,9 @@ begin
 					& " addr_mem " & to_string(addr_mem) & " instead of " & to_string(patterns(i).addr_mem)
 			severity error;
 			
-			assert out_dbg = patterns(i).out_dbg			
+			assert out_d = patterns(i).out_d
 			report "bad value for i = " & integer'image(i)
-			 		& " out_dbg " & to_string(out_dbg) & " instead of " & to_string(patterns(i).out_dbg)
+			 		& " out_d " & to_string(out_d) & " instead of " & to_string(patterns(i).out_d)
 			severity error;
 
 			assert write_mem = patterns(i).write_mem			

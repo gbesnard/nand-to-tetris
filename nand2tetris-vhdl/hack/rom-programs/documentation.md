@@ -10,3 +10,7 @@ These few hack programs can be loaded into ROM for computer test.
 ## mult-rom
 - Stores 6 in R0 and 7 in R1
 - Multiplies R0 and R1 and stores the result in R2.
+
+## max-rom
+- Stores 23456 in R0 and 12345 in R1
+- Find the max value and stores the result in R2.

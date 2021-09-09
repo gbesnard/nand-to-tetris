@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use work.virtual_registers_array_package.all;
 
 entity computer is	
 	-- The HACK computer, including CPU, ROM and RAM.
@@ -10,7 +11,11 @@ entity computer is
 	-- the software.
 	port (
 		reset : in std_logic;
-		clk : in std_logic
+		clk : in std_logic;
+		dbg_out_regs : out virtual_registers_array_t;
+		dbg_out_pc : out std_logic_vector(0 to 15);
+		dbg_out_d : out std_logic_vector(0 to 15);
+		dbg_out_a : out std_logic_vector(0 to 15)
 	);
 end computer;
 
@@ -21,7 +26,6 @@ architecture rtl of computer is
 	signal l_in_mem : std_logic_vector(0 to 15);
 	signal l_out_mem : std_logic_vector(0 to 15);
 	signal l_addr_mem : std_logic_vector(0 to 15);
-	signal l_out_dbg : std_logic_vector(0 to 15);
 	signal l_write_mem : std_logic;
 
 	--  Declaration of components that will be instantiated.
@@ -42,7 +46,8 @@ architecture rtl of computer is
 			write_mem : out std_logic;
 			addr_mem : out std_logic_vector(0 to 15);
 			out_pc : out std_logic_vector(0 to 15);
-			out_dbg : out std_logic_vector(0 to 15)
+			out_d : out std_logic_vector(0 to 15);
+			out_a : out std_logic_vector(0 to 15)
 		);
 	end component;
 
@@ -52,7 +57,8 @@ architecture rtl of computer is
 			load0 : in std_logic;
 			addr0 : in std_logic_vector(0 to 13);
 			clk : in std_logic; 
-			out0 : out std_logic_vector(0 to 15)
+			out0 : out std_logic_vector(0 to 15);
+			regs0 : out virtual_registers_array_t
 		);
 	end component;
 
@@ -77,15 +83,19 @@ begin
 		write_mem => l_write_mem,
 		addr_mem => l_addr_mem,
 		out_pc => l_pc,
-		out_dbg => l_out_dbg
+		out_d => dbg_out_d,
+		out_a => dbg_out_a
 	);
+
+	dbg_out_pc <= l_pc;
 
 	ram16k_fast_0: ram16k_fast port map (
 		in0 => l_out_mem,
 		load0 => l_write_mem,
 		addr0 => l_addr_mem(2 to 15),
 		clk => clk,
-		out0 => l_in_mem
+		out0 => l_in_mem,
+		regs0 => dbg_out_regs
 	);
 
 end rtl;

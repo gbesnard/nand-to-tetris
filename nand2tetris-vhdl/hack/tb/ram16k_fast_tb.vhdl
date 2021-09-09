@@ -4,6 +4,7 @@ use ieee.numeric_std.all;
 
 library work;
 use work.std_logic_vector_to_string_package.all;
+use work.virtual_registers_array_package.all;
 
 entity ram16k_fast_tb is
 --  A testbench has no ports.
@@ -19,7 +20,8 @@ architecture behaviour of ram16k_fast_tb is
 			load0 : in std_logic;
 			addr0 : in std_logic_vector(0 to 13);
 			clk : in std_logic; 
-			out0 : out std_logic_vector(0 to 15)
+			out0 : out std_logic_vector(0 to 15);
+			regs0 : out virtual_registers_array_t
 		);
 	end component;
 
@@ -29,6 +31,7 @@ architecture behaviour of ram16k_fast_tb is
 	signal in0 : std_logic_vector(0 to 15);
 	signal out0 : std_logic_vector(0 to 15);
 	signal addr0 : std_logic_vector(0 to 13) := "00000000000000";
+	signal regs0 : virtual_registers_array_t;
 
 begin
 	--  Component instantiation.
@@ -37,7 +40,8 @@ begin
 		load0 => load0,
 		addr0 => addr0,
 		clk => clk,
-		out0 => out0
+		out0 => out0,
+		regs0 => regs0
 	);
 
 	--  This process does the real job.
