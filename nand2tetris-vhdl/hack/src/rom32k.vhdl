@@ -9,9 +9,10 @@ use std.textio.all;
 
 entity rom32k is
 	-- Read Only Memory of 32K registers, each 16 bit-wide.
+	-- Access at addresses > 7FFF is forbidden.
 	-- Init using init-rom.txt.
 	port (
-		addr0 : in std_logic_vector(0 to 14);
+		addr0 : in std_logic_vector(0 to 15);
 		out0 : out std_logic_vector(0 to 15)
 	);
 end rom32k;
@@ -20,7 +21,7 @@ architecture behavioral of rom32k is
 	type rom_type is array (0 to 2**15) of std_logic_vector (0 to 15);
 
 	impure function init_ram_bin return rom_type is
-		file text_file : text open read_mode is "init-rom.txt";
+		file text_file : text open read_mode is "init-rom.hack";
 		variable text_line : line;
 		variable rom_content : rom_type;
 

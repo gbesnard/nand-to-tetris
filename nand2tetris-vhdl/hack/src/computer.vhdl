@@ -27,7 +27,7 @@ architecture rtl of computer is
 	--  Declaration of components that will be instantiated.
 	component rom32k
 		port (
-			addr0 : in std_logic_vector(0 to 14);
+			addr0 : in std_logic_vector(0 to 15);
 			out0 : out std_logic_vector(0 to 15)
 		);
 	end component;
@@ -64,7 +64,7 @@ architecture rtl of computer is
 begin
 
 	rom32k_0: rom32k port map (
-		addr0 => l_pc(1 to 15),
+		addr0 => l_pc,
 		out0 => l_instruction
 	);
 
@@ -83,7 +83,7 @@ begin
 	ram16k_fast_0: ram16k_fast port map (
 		in0 => l_out_mem,
 		load0 => l_write_mem,
-		addr0 => l_addr_mem(0 to 13),
+		addr0 => l_addr_mem(2 to 15),
 		clk => clk,
 		out0 => l_in_mem
 	);

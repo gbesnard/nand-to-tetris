@@ -12,11 +12,14 @@ entity dff is
 end dff;
  
 architecture behavioral of dff is
+	signal l_out : std_logic := '0';
 begin
 	process(clk)
 	begin
 	if rising_edge(clk) then
-		out0 <= in0;
+		l_out <= in0;
 	end if;
 	end process;
+
+	out0 <= l_out;
 end behavioral;

@@ -1,0 +1,12 @@
+# ROM Programs
+These few hack programs can be loaded into ROM for computer test.
+
+## test-rom
+- ROM used for test bench rom32k_tb, content doesn't mean anything.
+
+## add-rom
+- Computes R0 = 2 + 3  (R0 refers to RAM[0])
+
+## mult-rom
+- Stores 6 in R0 and 7 in R1
+- Multiplies R0 and R1 and stores the result in R2.

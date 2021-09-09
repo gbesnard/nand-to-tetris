@@ -29,8 +29,8 @@ begin
 		if rising_edge(clk) then
 			if (load0 = '1') then -- write data to address addr0
 				--convert 'addr0' type to integer from std_logic_vector
-				ram_single_port(to_integer(unsigned(addr0))) <= in0;
-			end if;
+				ram_single_port(to_integer(unsigned(addr0))) <= in0;				
+			end if;			
 		end if;
 	end process;
 

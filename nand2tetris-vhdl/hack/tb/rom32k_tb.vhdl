@@ -15,15 +15,15 @@ architecture behaviour of rom32k_tb is
 	--  Declaration of the component that will be instantiated.	
 	component rom32k
 		port (
-			addr0 : in std_logic_vector(0 to 14);
+			addr0 : in std_logic_vector(0 to 15);
 			out0 : out std_logic_vector(0 to 15)
 		);
 	end component;
 
 	--  Specifies which entity is bound with the component.
 	for rom32k_0: rom32k use entity work.rom32k;
-	signal addr0 : std_logic_vector(0 to 14) := "000000000000000";
-	signal out0 : std_logic_vector(0 to 15);	
+	signal addr0 : std_logic_vector(0 to 15) := "0000000000000000";
+	signal out0 : std_logic_vector(0 to 15);		
 
 begin
 	--  Component instantiation.
@@ -37,7 +37,7 @@ begin
 
 		type pattern_type is record
 			--  The inputs.
-			addr0 : std_logic_vector(0 to 14);
+			addr0 : std_logic_vector(0 to 15);
 			--  The expected outputs.
 			out0 : std_logic_vector(0 to 15);
 		end record;
@@ -47,11 +47,11 @@ begin
 		--  The patterns to apply.
 		constant patterns : pattern_array :=
 		(			
-			("000000000000000", "0000000000000000"),
-			("000000000000001", "0000000000000001"),
-			("000000000000010", "0000000000000010"),
-			("000000000000011", "0000000000000100"),
-			("111111111111111", "0000000000000000")
+			("0000000000000000", "0000000000000000"),
+			("0000000000000001", "0000000000000001"),
+			("0000000000000010", "0000000000000010"),
+			("0000000000000011", "0000000000000100"),
+			("0111111111111111", "0000000000000000")
 		);			
 		
 	begin

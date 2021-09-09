@@ -43,16 +43,6 @@ begin
 		end record;
 		
 		type pattern_array is array (natural range <>) of pattern_type;
-
-		--  Init pattern to apply.
-		constant init_patterns : pattern_array :=
-		(	
-			('1', '1', '1', 'U'),
-			('0', '1', '1', 'U'),
-			('1', '0', '1', 'U'),
-			('0', '0', '1', 'U'),
-			('1', '0', '0', 'U')
-		);
 		
 		--  The patterns to apply.
 		constant patterns : pattern_array :=
@@ -273,14 +263,6 @@ begin
 			('1', '1', '0', '0')									
 		);
 	begin
-		--  Init pattern before test.
-		for i in init_patterns'range loop
-			--  Set the inputs.
-			clk <= init_patterns(i).clk;	
-			in0 <= init_patterns(i).in0;					
-			load0 <= init_patterns(i).load0;	
-			wait for clk_period/2;
-		end loop;
 
 		--  Check each pattern.
 		for i in patterns'range loop

@@ -179,26 +179,18 @@ test:
 	./ram16k_fast_tb
 	./pc_tb
 	./cpu_tb
-	cp rom-programs/test-rom.txt init-rom.txt && ./rom32k_tb
-	# cp rom-programs/add-rom.txt init-rom.txt && ./computer_tb --stop-time=1000us
+	cp rom-programs/test-rom.hack init-rom.hack && ./rom32k_tb
+	cp rom-programs/add-rom.hack init-rom.hack && ./computer_tb --stop-time=1us
+	cp rom-programs/mult-rom.hack mult-rom.hack && ./computer_tb --stop-time=5us
 
 test_dump:
 	ghdl -r mux4way16_gate_tb --vcd=mux4way16_gate_tb.vcd
 
-wave:
-	ghdl -r dff_tb --wave=dff_wave.ghw --stop-time=1000us
-	ghdl -r bit_tb --wave=bit_wave.ghw
-	ghdl -r reg_tb --wave=reg_wave.ghw
-	ghdl -r ram8_tb --wave=ram8_wave.ghw
-	#ghdl -r ram64_tb --wave=ram64_wave.ghw
-	#ghdl -r ram512_tb --wave=ram512_wave.ghw
-	#ghdl -r ram4k_tb --wave=ram512_wave.ghw
-	#ghdl -r ram16k_tb --wave=ram16k_wave.ghw
+wave:	
 	ghdl -r ram16k_fast_tb --wave=ram16k_fast_wave.ghw
-	ghdl -r pc_tb --wave=pc_wave.ghw
-	ghdl -r cpu_tb --wave=cpu_wave.ghw
-	cp rom-programs/test-rom.txt init-rom.txt && ghdl -r rom32k_tb --wave=rom32k_wave.ghw
-	cp rom-programs/add-rom.txt init-rom.txt && ghdl -r computer_tb --wave=computer_wave.ghw --stop-time=1000us
+	cp rom-programs/test-rom.hack init-rom.hack && ghdl -r rom32k_tb --wave=rom32k_wave.ghw
+	cp rom-programs/add-rom.hack init-rom.hack && ghdl -r computer_tb --wave=computer_add_wave.ghw --stop-time=1us
+	cp rom-programs/mult-rom.hack init-rom.hack && ghdl -r computer_tb --wave=computer_mult_wave.ghw --stop-time=5us
 
 light_clean:
 	rm -f e~*.o

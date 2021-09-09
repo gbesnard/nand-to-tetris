@@ -52,27 +52,6 @@ begin
 		
 		type pattern_array is array (natural range <>) of pattern_type;
 
-		--  Init pattern to apply.
-		constant init_patterns : pattern_array :=
-		(	
-			('0', "0000000000000000", '1', "000", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "000", "UUUUUUUUUUUUUUUU"),			
-			('0', "0000000000000000", '1', "001", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "001", "UUUUUUUUUUUUUUUU"),			
-			('0', "0000000000000000", '1', "010", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "010", "UUUUUUUUUUUUUUUU"),						
-			('0', "0000000000000000", '1', "011", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "011", "UUUUUUUUUUUUUUUU"),						
-			('0', "0000000000000000", '1', "100", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "100", "UUUUUUUUUUUUUUUU"),			
-			('0', "0000000000000000", '1', "101", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "101", "UUUUUUUUUUUUUUUU"),			
-			('0', "0000000000000000", '1', "110", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "110", "UUUUUUUUUUUUUUUU"),						
-			('0', "0000000000000000", '1', "111", "UUUUUUUUUUUUUUUU"),
-			('1', "0000000000000000", '1', "111", "UUUUUUUUUUUUUUUU")
-		);
-
 		--  The patterns to apply.
 		constant patterns : pattern_array :=
 		(			
@@ -251,15 +230,6 @@ begin
 		);
 		
 	begin
-		--  Init pattern before test.
-		for i in init_patterns'range loop
-			--  Set the inputs.
-			clk <= init_patterns(i).clk;	
-			in0 <= init_patterns(i).in0;					
-			load0 <= init_patterns(i).load0;	
-		 	addr0 <= init_patterns(i).addr0;
-			wait for clk_period/2;
-		end loop;
 
 		--  Check each pattern.
 		for i in patterns'range loop

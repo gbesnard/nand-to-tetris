@@ -379,19 +379,7 @@ begin
 			('1', "0101010101010101", '0', "111101", "0101010101010101")			
 		);
 		
-	begin
-		-- Init RAM with zeros
-		load0 <= '1';
-		in0 <= "0000000000000000";
-		for i in 0 to 63 loop
-			addr0 <= std_logic_vector(to_unsigned(i, addr0'length));
-			clk <= '0';
-			wait for clk_period/2;
-			clk <= '1';
-			wait for clk_period/2;			
-		end loop;
-		load0 <= '0';
-		wait for clk_period;		
+	begin		
 
 		--  Check each pattern.
 		for i in patterns'range loop
