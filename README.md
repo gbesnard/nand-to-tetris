@@ -13,21 +13,21 @@
 - Results can be checked using a test bench, by analyzing signals through gtkwave, or using the ncurses based co-simulation.
 
 ## Tools
-For original Nand2Tetris, use the course provided tools.
-
-For VHDL:
-
 - ghdl
 - gtkwave
 
+## Co-simulation
+- Co-simulation based on VHPIDIRECT (https://ghdl.github.io/ghdl-cosim/).
+- Display in terminal using ncurses to emulate IO (screen and keyboard).
+
 ## Todo
-- Part > 4 for original nand2tetris.
-- For co-simulation: set frequency, start, continue, pause, reset
-- For co-simulation: interactive ROM loading
-- For co-simulation: RAM/ROM monitoring screen
-- For co-simulation: help screen
-- Fillscreen function using co-simulation screen (add new memory mapping for IO)
+- For co-simulation: set frequency, start, continue, pause, reset.
+- For co-simulation: interactive ROM loading.
+- For co-simulation: RAM/ROM monitoring screen.
+- For co-simulation: help screen.
+- Fillscreen function using co-simulation screen (add new memory mapping for IO).
 - Assembler for asm.
 - Stack and functions implementation.
 - Assembler for JACK high level language.
 - Try to port it to an FPGA board.
+
