@@ -1,18 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
--- RAM using behavioral method for faster simulation, heavily inspired from
--- https://vhdlguide.readthedocs.io/en/latest/vhdl/dex.html#single-port-ram
-
-package virtual_registers_array_package is
-	type virtual_registers is (R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15);
-	type virtual_registers_array_t is array(0 to 15) of std_logic_vector(0 to 15);
-end package virtual_registers_array_package;
-
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
 use work.virtual_registers_array_package.all;
 
 entity ram16k_fast is

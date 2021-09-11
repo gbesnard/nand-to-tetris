@@ -1,8 +1,11 @@
 # ROM Programs
 These few hack programs can be loaded into ROM for computer test.
 
+## init-rom
+Default ROM loaded at startup, can be any of the following programs.
+
 ## test-rom
-- ROM used for test bench rom32k_tb, content doesn't mean anything.
+- ROM used for rom32k test bench, content doesn't mean anything.
 
 ## add-rom
 - Computes R0 = 2 + 3  (R0 refers to RAM[0])

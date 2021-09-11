@@ -21,7 +21,7 @@ architecture behavioral of rom32k is
 	type rom_type is array (0 to 2**15) of std_logic_vector (0 to 15);
 
 	impure function init_ram_bin return rom_type is
-		file text_file : text open read_mode is "init-rom.hack";
+		file text_file : text open read_mode is "rom-programs/init-rom.hack";
 		variable text_line : line;
 		variable rom_content : rom_type;
 
