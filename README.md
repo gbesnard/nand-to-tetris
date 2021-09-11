@@ -20,6 +20,12 @@
 - Co-simulation based on VHPIDIRECT (https://ghdl.github.io/ghdl-cosim/).
 - Display in terminal using ncurses to emulate IO (screen and keyboard).
 
+## Usage
+- `make` to build everything.
+- `make test` to use testbench to validate computer design.
+- `make wave` to extract programs execution signal.
+- `./computer_cosim` to run our cosimulation.
+
 ## Todo
 - For co-simulation: set frequency, start, continue, pause, reset.
 - For co-simulation: interactive ROM loading.
