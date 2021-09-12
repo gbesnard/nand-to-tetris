@@ -23,7 +23,7 @@
 ## Usage
 - `make` to build everything.
 - `make test` to use testbench to validate the computer design.
-- `make wave` to extract programs execution signal.
+- `make wave` to extract programs executions signals.
 - `./computer_cosim` to run our cosimulation.
 
 ## Todo

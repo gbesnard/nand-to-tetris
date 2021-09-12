@@ -21,7 +21,7 @@ architecture behaviour of ram16k_fast_tb is
 			addr0 : in std_logic_vector(0 to 13);
 			clk : in std_logic; 
 			out0 : out std_logic_vector(0 to 15);
-			regs0 : out virtual_registers_array_t
+			dbg_out_regs : out virtual_registers_array_t
 		);
 	end component;
 
@@ -31,7 +31,7 @@ architecture behaviour of ram16k_fast_tb is
 	signal in0 : std_logic_vector(0 to 15);
 	signal out0 : std_logic_vector(0 to 15);
 	signal addr0 : std_logic_vector(0 to 13) := "00000000000000";
-	signal regs0 : virtual_registers_array_t;
+	signal dbg_out_regs : virtual_registers_array_t;
 
 begin
 	--  Component instantiation.
@@ -41,7 +41,7 @@ begin
 		addr0 => addr0,
 		clk => clk,
 		out0 => out0,
-		regs0 => regs0
+		dbg_out_regs => dbg_out_regs
 	);
 
 	--  This process does the real job.

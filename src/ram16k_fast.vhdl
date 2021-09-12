@@ -15,7 +15,7 @@ entity ram16k_fast is
 		addr0 : in std_logic_vector(0 to 13);
 		clk : in std_logic; 
 		out0 : out std_logic_vector(0 to 15);
-		regs0 : out virtual_registers_array_t
+		dbg_out_regs : out virtual_registers_array_t
 	);
 end ram16k_fast;
 
@@ -37,20 +37,20 @@ begin
 	-- read data from address 'addr0'
 	-- convert 'addr0' type to integer from std_logic_vector
 	out0 <= ram_single_port(to_integer(unsigned(addr0)));
-	regs0(0) <= ram_single_port(0);
-	regs0(1) <= ram_single_port(1);
-	regs0(2) <= ram_single_port(2);
-	regs0(3) <= ram_single_port(3);
-	regs0(4) <= ram_single_port(4);
-	regs0(5) <= ram_single_port(5);
-	regs0(6) <= ram_single_port(6);
-	regs0(7) <= ram_single_port(7);
-	regs0(8) <= ram_single_port(8);
-	regs0(9) <= ram_single_port(9);
-	regs0(10) <= ram_single_port(10);
-	regs0(11) <= ram_single_port(11);
-	regs0(12) <= ram_single_port(12);
-	regs0(13) <= ram_single_port(13);
-	regs0(14) <= ram_single_port(14);
-	regs0(15) <= ram_single_port(15);
+	dbg_out_regs(0) <= ram_single_port(0);
+	dbg_out_regs(1) <= ram_single_port(1);
+	dbg_out_regs(2) <= ram_single_port(2);
+	dbg_out_regs(3) <= ram_single_port(3);
+	dbg_out_regs(4) <= ram_single_port(4);
+	dbg_out_regs(5) <= ram_single_port(5);
+	dbg_out_regs(6) <= ram_single_port(6);
+	dbg_out_regs(7) <= ram_single_port(7);
+	dbg_out_regs(8) <= ram_single_port(8);
+	dbg_out_regs(9) <= ram_single_port(9);
+	dbg_out_regs(10) <= ram_single_port(10);
+	dbg_out_regs(11) <= ram_single_port(11);
+	dbg_out_regs(12) <= ram_single_port(12);
+	dbg_out_regs(13) <= ram_single_port(13);
+	dbg_out_regs(14) <= ram_single_port(14);
+	dbg_out_regs(15) <= ram_single_port(15);
 end behavioral;

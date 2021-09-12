@@ -51,21 +51,21 @@ architecture rtl of computer is
 		);
 	end component;
 
-	component ram16k_fast
+	component memory
 		port (
 			in0 : in std_logic_vector(0 to 15);
 			load0 : in std_logic;
-			addr0 : in std_logic_vector(0 to 13);
+			addr0 : in std_logic_vector(0 to 15);
 			clk : in std_logic; 
 			out0 : out std_logic_vector(0 to 15);
-			regs0 : out virtual_registers_array_t
+			dbg_out_regs : out virtual_registers_array_t
 		);
 	end component;
 
 	--  Specifies which entity is bound with the components.
 	for rom32k_0: rom32k use entity work.rom32k;
 	for cpu_0: cpu use entity work.cpu;
-	for ram16k_fast_0: ram16k_fast use entity work.ram16k_fast;
+	for memory_0: memory use entity work.memory;
 
 begin
 
@@ -89,13 +89,13 @@ begin
 
 	dbg_out_pc <= l_pc;
 
-	ram16k_fast_0: ram16k_fast port map (
+	memory_0: memory port map (
 		in0 => l_out_mem,
 		load0 => l_write_mem,
-		addr0 => l_addr_mem(2 to 15),
+		addr0 => l_addr_mem,
 		clk => clk,
 		out0 => l_in_mem,
-		regs0 => dbg_out_regs
+		dbg_out_regs => dbg_out_regs
 	);
 
 end rtl;

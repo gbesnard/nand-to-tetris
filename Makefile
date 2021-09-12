@@ -3,8 +3,8 @@ all: std_logic_vector_to_string_package virtual_register_array_package \
 	mux_gate dmux_gate not16_gate and16_gate or16_gate \
 	mux16_gate or8way_gate mux4way16_gate mux8way16_gate \
 	dmux4way_gate dmux8way_gate half_adder full_adder add16 inc16 \
-	alu dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast pc \
-	cpu rom32k computer computer_cosim \
+	alu dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast memory \
+	pc cpu rom32k computer computer_cosim \
 	light_clean
 
 std_logic_vector_to_string_package:
@@ -133,6 +133,10 @@ ram16k_fast:
 	ghdl -i --workdir=workdir -O3 src/ram16k_fast.vhdl tb/ram16k_fast_tb.vhdl
 	ghdl -m --workdir=workdir -O3 ram16k_fast_tb
 
+memory: 
+	ghdl -i --workdir=workdir -O3 src/memory.vhdl tb/memory_tb.vhdl
+	ghdl -m --workdir=workdir -O3 memory_tb
+
 pc:
 	ghdl -i --workdir=workdir -O3 src/pc.vhdl tb/pc_tb.vhdl
 	ghdl -m --workdir=workdir -O3 pc_tb
@@ -179,12 +183,13 @@ test:
 	./dff_tb --stop-time=1000us
 	./bit_tb
 	./reg_tb
-	./ram8_tb
-	./ram64_tb	
-	./ram512_tb	
-	./ram4k_tb	
-	./ram16k_tb
+# ./ram8_tb
+# ./ram64_tb	
+# ./ram512_tb	
+# ./ram4k_tb	
+# ./ram16k_tb
 	./ram16k_fast_tb
+	./memory_tb
 	./pc_tb
 	./cpu_tb
 	cp rom-programs/test-rom.hack	rom-programs/init-rom.hack && ./rom32k_tb
