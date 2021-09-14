@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use work.virtual_registers_array_package.all;
+use work.screen_array_package.all;
 
 entity computer is	
 	-- The HACK computer, including CPU, ROM and RAM.
@@ -15,7 +16,8 @@ entity computer is
 		dbg_out_regs : out virtual_registers_array_t;
 		dbg_out_pc : out std_logic_vector(0 to 15);
 		dbg_out_d : out std_logic_vector(0 to 15);
-		dbg_out_a : out std_logic_vector(0 to 15)
+		dbg_out_a : out std_logic_vector(0 to 15);
+		dbg_out_screen : out screen_array_t
 	);
 end computer;
 
@@ -58,14 +60,15 @@ architecture rtl of computer is
 			addr0 : in std_logic_vector(0 to 15);
 			clk : in std_logic; 
 			out0 : out std_logic_vector(0 to 15);
-			dbg_out_regs : out virtual_registers_array_t
+			dbg_out_regs : out virtual_registers_array_t;
+			dbg_out_screen : out screen_array_t
 		);
 	end component;
 
 	--  Specifies which entity is bound with the components.
 	for rom32k_0: rom32k use entity work.rom32k;
 	for cpu_0: cpu use entity work.cpu;
-	for memory_0: memory use entity work.memory;
+	for memory_0: memory use entity work.memory;		
 
 begin
 
@@ -95,7 +98,8 @@ begin
 		addr0 => l_addr_mem,
 		clk => clk,
 		out0 => l_in_mem,
-		dbg_out_regs => dbg_out_regs
+		dbg_out_regs => dbg_out_regs,
+		dbg_out_screen => dbg_out_screen
 	);
 
 end rtl;

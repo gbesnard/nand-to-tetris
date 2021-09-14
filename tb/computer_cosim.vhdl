@@ -2,6 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.virtual_registers_array_package.all;
+use work.screen_array_package.all;
 
 entity computer_cosim is
 --  A testbench has no ports.
@@ -9,13 +10,14 @@ end computer_cosim;
 
 architecture behaviour of computer_cosim is
 
-	type int_array is array (0 to 15) of integer;
+	type regs_array_t is array (0 to 15) of integer;
+	type pixels_array_t is array (0 to 1023) of integer;
 
 	constant clk_period : time := 10 ns;
 	constant tick_period : time := 10 us;
 
 	-- VHPIDIRECT interface.
-	procedure set_regs (regs: int_array) is
+	procedure set_regs (regs: regs_array_t) is
     begin report "VHPIDIRECT set_regs" severity failure; end;
     attribute foreign of set_regs : procedure is "VHPIDIRECT set_regs";
 
@@ -31,6 +33,10 @@ architecture behaviour of computer_cosim is
     begin report "VHPIDIRECT set_d_reg" severity failure; end;
     attribute foreign of set_d_reg : procedure is "VHPIDIRECT set_d_reg";
 
+	procedure set_screen (pixels: pixels_array_t) is
+	begin report "VHPIDIRECT set_screen" severity failure; end;
+	attribute foreign of set_screen : procedure is "VHPIDIRECT set_screen";
+
 	--  Declaration of the component that will be instantiated.
 	component computer
 		port (
@@ -39,7 +45,8 @@ architecture behaviour of computer_cosim is
 			dbg_out_regs : out virtual_registers_array_t;
 			dbg_out_pc : out std_logic_vector(0 to 15);
 			dbg_out_d : out std_logic_vector(0 to 15);
-			dbg_out_a : out std_logic_vector(0 to 15)
+			dbg_out_a : out std_logic_vector(0 to 15);
+			dbg_out_screen : out screen_array_t
 		);
   	end component;
 
@@ -50,6 +57,7 @@ architecture behaviour of computer_cosim is
 	signal dbg_out_pc : std_logic_vector(0 to 15);
 	signal dbg_out_d : std_logic_vector(0 to 15);
 	signal dbg_out_a : std_logic_vector(0 to 15);
+	signal dbg_out_screen : screen_array_t;
 
 begin
 	--  Component instantiation.
@@ -59,7 +67,8 @@ begin
 		dbg_out_regs => dbg_out_regs,
 		dbg_out_pc => dbg_out_pc,
 		dbg_out_d => dbg_out_d,
-		dbg_out_a => dbg_out_a
+		dbg_out_a => dbg_out_a,
+		dbg_out_screen => dbg_out_screen
 	);
 
 	-- Clock process definition.
@@ -91,15 +100,18 @@ begin
 
 	-- VHPIDIRECT process.
 	vhpi_process: process(clk)
-    	variable count: integer := 0;
-		variable regs_int_array: int_array;
+		variable regs_int_array: regs_array_t;
+		variable pixels_int_array: pixels_array_t;
 	begin
         if rising_edge(tick) then
-			count := count + 1;
-
 			-- Construct array of regs integer value.
 			for i in regs_int_array' range loop
 				regs_int_array(i) := to_integer(unsigned(dbg_out_regs(i)));
+			end loop;
+
+			-- Construct array of pixels.
+			for i in pixels_array_t' range loop
+				pixels_int_array(i) := to_integer(unsigned(dbg_out_screen(i)));
 			end loop;
 
 			-- Send registers to C interface.
@@ -107,6 +119,7 @@ begin
 			set_pc_reg(to_integer(unsigned(dbg_out_pc)));
 			set_a_reg(to_integer(unsigned(dbg_out_a)));
 			set_d_reg(to_integer(unsigned(dbg_out_d)));
+			set_screen(pixels_int_array);
 
 		end if;
 	end process;

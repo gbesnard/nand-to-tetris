@@ -5,6 +5,8 @@
 #include <ncurses.h>
 
 #define NB_VIRTUAL_REGS 16
+#define NB_SCREEN_PIXELS 1024
+
 #define REFRESH_RATE 0.1      /* refresh rate in seconds */
 
 extern int ghdl_main (int argc, char **argv);
@@ -16,6 +18,7 @@ static int pc_register = 0;
 static int a_register = 0;
 static int d_register = 0;
 static int key_register = 0;
+static int screen_pixels[NB_SCREEN_PIXELS] = {0};
 
 /**
  * VHPIDIRECT set virtual registers.
@@ -52,6 +55,19 @@ void set_a_reg(int reg)
 void set_d_reg(int reg) 
 {	
 	d_register = reg;
+}
+
+/**
+ * VHPIDIRECT set screen pixels.
+ */
+void set_screen(int *pixels) 
+{	
+	unsigned i;
+
+	for (i = 0; i < NB_SCREEN_PIXELS; i++)
+	{
+		screen_pixels[i] = pixels[i];		
+	}
 }
 
 /**
@@ -149,6 +165,9 @@ void destroy_win(WINDOW *local_win)
  */
 int main(void) 
 {
+	unsigned i;
+	char print_char[2];
+
 	pthread_t ghdl_simulation_thread, keyboard_thread;
 	WINDOW *win_screen;
 	WINDOW *win_dbg;
@@ -174,15 +193,23 @@ int main(void)
 	pthread_create(&keyboard_thread, NULL, handle_keyboard_input, NULL);
 		
 	/* Create two mains windows. */
-	win_screen = create_newwin(16, 80, 0, 0);
-	win_dbg = create_newwin(6, 80, 17, 0);
+	win_screen = create_newwin(16 + 2, 64 + 2, 0, 6);
+	win_dbg = create_newwin(6, 80, 16 + 2, 0);
 	
-	mvprintw(15, 2, "HACK COMPUTER, KHBX SYSTEM");	
+	mvprintw(15 + 2, 8, "HACK COMPUTER, KHBX SYSTEM");	
 	refresh();
 
 	/* Main display loop. */
     while(1)
     {
+		/* Print screen. */
+		for (i = 0; i < NB_SCREEN_PIXELS; i++)
+		{
+			print_char[0] = (screen_pixels[i] == 1) ? '#' : ' ';
+			print_char[1] = 0;
+			mvwprintw(win_screen, 1 + (i / 64), 1 + (i % 64), print_char);			
+		}
+
 		/* Print virtual registers values. */
 		mvwprintw(win_dbg, 1+0, 2,  "PC : %6d ", pc_register);
        	mvwprintw(win_dbg, 1+1, 2,  "A  : %6d ", a_register);

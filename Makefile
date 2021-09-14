@@ -1,17 +1,20 @@
-all: std_logic_vector_to_string_package virtual_register_array_package \
+all: std_logic_vector_to_string_package virtual_register_array_package screen_array_package \
 	nand_gate not_gate and_gate or_gate xor_gate \
 	mux_gate dmux_gate not16_gate and16_gate or16_gate \
 	mux16_gate or8way_gate mux4way16_gate mux8way16_gate \
 	dmux4way_gate dmux8way_gate half_adder full_adder add16 inc16 \
-	alu dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast memory \
-	pc cpu rom32k computer computer_cosim \
-	light_clean
+	alu dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast \
+	screen memory pc cpu rom32k computer computer_cosim \
+light_clean
 
 std_logic_vector_to_string_package:
 	ghdl -i --work=work --workdir=workdir -O3 src/std_logic_vector_to_string_package.vhdl
 
 virtual_register_array_package:
 	ghdl -i --workdir=workdir -O3 src/virtual_register_array_package.vhdl
+
+screen_array_package:
+	ghdl -i --workdir=workdir -O3 src/screen_array_package.vhdl
 
 nand_gate: 
 	ghdl -i --workdir=workdir -O3 src/nand_gate.vhdl tb/nand_gate_tb.vhdl
@@ -133,6 +136,9 @@ ram16k_fast:
 	ghdl -i --workdir=workdir -O3 src/ram16k_fast.vhdl tb/ram16k_fast_tb.vhdl
 	ghdl -m --workdir=workdir -O3 ram16k_fast_tb
 
+screen: 
+	ghdl -i --workdir=workdir -O3 src/screen.vhdl 
+
 memory: 
 	ghdl -i --workdir=workdir -O3 src/memory.vhdl tb/memory_tb.vhdl
 	ghdl -m --workdir=workdir -O3 memory_tb
@@ -152,11 +158,12 @@ rom32k:
 computer:
 	ghdl -i --workdir=workdir -fsynopsys -O3 src/computer.vhdl tb/computer_tb.vhdl
 	ghdl -m --workdir=workdir -fsynopsys -O3 computer_tb
+	rm -f computer_cosim
 
 computer_cosim:
 	ghdl -a --workdir=workdir -fsynopsys tb/computer_cosim.vhdl
 	ghdl --bind --workdir=workdir -fsynopsys computer_cosim 
-	gcc -O3 -Wall -Wextra src/computer_cosim.c -lcurses -o computer_cosim -Wl,`ghdl --list-link computer_cosim`
+	gcc -O3 -Wall -Wextra tb/computer_cosim.c -lcurses -o computer_cosim -Wl,`ghdl --list-link computer_cosim`	
 
 test:
 	./nand_gate_tb
@@ -195,10 +202,11 @@ test:
 	cp rom-programs/test-rom.hack	rom-programs/init-rom.hack && ./rom32k_tb
 	cp rom-programs/add-rom.hack	rom-programs/init-rom.hack && cp tb/cmp/add-cmp.txt 	tb/cmp/cmp.txt && ./computer_tb --ieee-asserts=disable-at-0 --stop-time=2us
 	cp rom-programs/mult-rom.hack	rom-programs/init-rom.hack && cp tb/cmp/mult-cmp.txt 	tb/cmp/cmp.txt && ./computer_tb --ieee-asserts=disable-at-0 --stop-time=2us
-	cp rom-programs/max-rom.hack	rom-programs/init-rom.hack && cp tb/cmp/max-cmp.txt 	tb/cmp/cmp.txt && ./computer_tb --ieee-asserts=disable-at-0 --stop-time=2us
+	cp rom-programs/max-rom.hack	rom-programs/init-rom.hack && cp tb/cmp/max-cmp.txt 	tb/cmp/cmp.txt && ./computer_tb --ieee-asserts=disable-at-0 --stop-time=2us	
 
 wave:
 	mkdir -p waves
+	ghdl -r memory_tb --ieee-asserts=disable-at-0 --wave=waves/memory.ghw --stop-time=2us
 	cp rom-programs/add-rom.hack	rom-programs/init-rom.hack && cp tb/cmp/add-cmp.txt     tb/cmp/cmp.txt && ghdl -r computer_tb --ieee-asserts=disable-at-0 --wave=waves/computer_add_wave.ghw --stop-time=2us
 	cp rom-programs/mult-rom.hack 	rom-programs/init-rom.hack && cp tb/cmp/mult-cmp.txt     tb/cmp/cmp.txt && ghdl -r computer_tb --ieee-asserts=disable-at-0 --wave=waves/computer_mult_wave.ghw --stop-time=2us
 	cp rom-programs/max-rom.hack 	rom-programs/init-rom.hack && cp tb/cmp/max-cmp.txt     tb/cmp/cmp.txt && ghdl -r computer_tb --ieee-asserts=disable-at-0 --wave=waves/computer_max_wave.ghw --stop-time=2us

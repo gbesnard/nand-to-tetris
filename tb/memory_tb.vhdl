@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 library work;
 use work.std_logic_vector_to_string_package.all;
 use work.virtual_registers_array_package.all;
+use work.screen_array_package.all;
 
 entity memory_tb is
 --  A testbench has no ports.
@@ -21,7 +22,8 @@ architecture behaviour of memory_tb is
 			addr0 : in std_logic_vector(0 to 15);
 			clk : in std_logic; 
 			out0 : out std_logic_vector(0 to 15);
-			dbg_out_regs : out virtual_registers_array_t
+			dbg_out_regs : out virtual_registers_array_t;
+			dbg_out_screen : out screen_array_t
 		);
 	end component;
 
@@ -32,6 +34,7 @@ architecture behaviour of memory_tb is
 	signal out0 : std_logic_vector(0 to 15);
 	signal addr0 : std_logic_vector(0 to 15) := "0000000000000000";
 	signal dbg_out_regs : virtual_registers_array_t;
+	signal dbg_out_screen : screen_array_t;
 
 begin
 	--  Component instantiation.
@@ -41,7 +44,8 @@ begin
 		addr0 => addr0,
 		clk => clk,
 		out0 => out0,
-		dbg_out_regs => dbg_out_regs
+		dbg_out_regs => dbg_out_regs,
+		dbg_out_screen => dbg_out_screen
 	);
 
 	--  This process does the real job.
@@ -62,6 +66,7 @@ begin
 		--  The patterns to apply.
 		constant patterns : pattern_array :=
 		(			
+			-- Test RAM
 			('0', "0000000000000000", '0', "0000000000000000", "0000000000000000"),
 			('1', "0000000000000000", '0', "0000000000000000", "0000000000000000"),
 			('0', "0000000000000000", '1', "0000000000000000", "0000000000000000"),
@@ -380,7 +385,19 @@ begin
 			('1', "0101010101010101", '0', "0010010101010101", "0101010101010101"),
 			('1', "0101010101010101", '0', "0010110101010101", "0101010101010101"),
 			('1', "0101010101010101", '0', "0011010101010101", "0101010101010101"),
-			('1', "0101010101010101", '0', "0011110101010101", "0101010101010101")			
+			('1', "0101010101010101", '0', "0011110101010101", "0101010101010101"),
+			
+			-- Test Screen
+			('0', "0000000000000001", '1', "0100000000000000", "0000000000000000"),
+			('1', "0000000000000001", '1', "0100000000000000", "0000000000000001"),
+			('0', "0000000000000000", '0', "0100000000000000", "0000000000000001"),
+			('1', "0000000000000000", '0', "0100000000000000", "0000000000000001"),
+			('0', "0000000000000001", '0', "0100001111111111", "0000000000000000"),
+			('1', "0000000000000001", '0', "0100001111111111", "0000000000000000"),
+			('0', "0000000000000001", '1', "0100001111111111", "0000000000000000"),
+			('1', "0000000000000001", '1', "0100001111111111", "0000000000000001"),
+			('0', "0000000000000000", '0', "0100001111111111", "0000000000000001"),
+			('1', "0000000000000000", '0', "0100001111111111", "0000000000000001")
 		);
 		
 	begin

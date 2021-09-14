@@ -5,6 +5,7 @@ use ieee.std_logic_textio.all; -- require for writing/reading std_logic etc.
 library work;
 use work.std_logic_vector_to_string_package.all;
 use work.virtual_registers_array_package.all;
+use work.screen_array_package.all;
 
 use std.textio.all;
 
@@ -23,7 +24,8 @@ architecture behaviour of computer_tb is
 			dbg_out_regs : out virtual_registers_array_t;
 			dbg_out_pc : out std_logic_vector(0 to 15);
 			dbg_out_d : out std_logic_vector(0 to 15);
-			dbg_out_a : out std_logic_vector(0 to 15)
+			dbg_out_a : out std_logic_vector(0 to 15);
+			dbg_out_screen : out screen_array_t
 		);
   	end component;
 
@@ -34,6 +36,7 @@ architecture behaviour of computer_tb is
 	signal dbg_out_pc : std_logic_vector(0 to 15);
 	signal dbg_out_d : std_logic_vector(0 to 15);
 	signal dbg_out_a : std_logic_vector(0 to 15);
+	signal dbg_out_screen : screen_array_t;
 
 	--  Buffer for storing the text from input read-file.
     file input_buf : text;
@@ -46,7 +49,8 @@ begin
 		dbg_out_regs => dbg_out_regs,
 		dbg_out_pc => dbg_out_pc,
 		dbg_out_d => dbg_out_d,
-		dbg_out_a => dbg_out_a
+		dbg_out_a => dbg_out_a,
+		dbg_out_screen => dbg_out_screen
 	);
 
 	-- Clock process definition.
