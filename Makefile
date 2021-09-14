@@ -4,7 +4,7 @@ all: std_logic_vector_to_string_package virtual_register_array_package screen_ar
 	mux16_gate or8way_gate mux4way16_gate mux8way16_gate \
 	dmux4way_gate dmux8way_gate half_adder full_adder add16 inc16 \
 	alu dff bit reg ram8 ram64 ram512 ram4k ram16k ram16k_fast \
-	screen memory pc cpu rom32k computer computer_cosim \
+	screen keyboard memory pc cpu rom32k computer computer_cosim \
 light_clean
 
 std_logic_vector_to_string_package:
@@ -139,6 +139,9 @@ ram16k_fast:
 screen: 
 	ghdl -i --workdir=workdir -O3 src/screen.vhdl 
 
+keyboard: 
+	ghdl -i --workdir=workdir -O3 src/keyboard.vhdl
+
 memory: 
 	ghdl -i --workdir=workdir -O3 src/memory.vhdl tb/memory_tb.vhdl
 	ghdl -m --workdir=workdir -O3 memory_tb
@@ -204,6 +207,9 @@ test:
 	cp rom-programs/mult-rom.hack	rom-programs/init-rom.hack && cp tb/cmp/mult-cmp.txt 	tb/cmp/cmp.txt && ./computer_tb --ieee-asserts=disable-at-0 --stop-time=2us
 	cp rom-programs/max-rom.hack	rom-programs/init-rom.hack && cp tb/cmp/max-cmp.txt 	tb/cmp/cmp.txt && ./computer_tb --ieee-asserts=disable-at-0 --stop-time=2us	
 
+test_cosim:
+	cp rom-programs/screen-rom.hack rom-programs/init-rom.hack && ./computer_cosim
+	
 wave:
 	mkdir -p waves
 	ghdl -r memory_tb --ieee-asserts=disable-at-0 --wave=waves/memory.ghw --stop-time=2us

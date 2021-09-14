@@ -21,9 +21,11 @@ architecture behaviour of memory_tb is
 			load0 : in std_logic;
 			addr0 : in std_logic_vector(0 to 15);
 			clk : in std_logic; 
+			dbg_keyboard_in : in std_logic_vector(0 to 15);
 			out0 : out std_logic_vector(0 to 15);
 			dbg_out_regs : out virtual_registers_array_t;
-			dbg_out_screen : out screen_array_t
+			dbg_out_screen : out screen_array_t;
+			dbg_keyboard_out : out std_logic_vector(0 to 15)
 		);
 	end component;
 
@@ -31,10 +33,12 @@ architecture behaviour of memory_tb is
 	for memory_0: memory use entity work.memory;
 	signal load0, clk : std_logic;
 	signal in0 : std_logic_vector(0 to 15);
-	signal out0 : std_logic_vector(0 to 15);
+	signal dbg_keyboard_in : std_logic_vector(0 to 15);
+	signal out0 : std_logic_vector(0 to 15);	
 	signal addr0 : std_logic_vector(0 to 15) := "0000000000000000";
 	signal dbg_out_regs : virtual_registers_array_t;
 	signal dbg_out_screen : screen_array_t;
+	signal dbg_keyboard_out : std_logic_vector(0 to 15);
 
 begin
 	--  Component instantiation.
@@ -43,9 +47,11 @@ begin
 		load0 => load0,
 		addr0 => addr0,
 		clk => clk,
+		dbg_keyboard_in => dbg_keyboard_in,
 		out0 => out0,
 		dbg_out_regs => dbg_out_regs,
-		dbg_out_screen => dbg_out_screen
+		dbg_out_screen => dbg_out_screen,
+		dbg_keyboard_out => dbg_keyboard_out
 	);
 
 	--  This process does the real job.

@@ -1,17 +1,10 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// File name: projects/04/Mult.asm
-
-// TODO: explicit: Do something with screen.
-
-(START)
-	@1
-	D=A		// D = 1
-	@16384
-	M=D		// pixels[0] = 1
-	@17407
-	M=D		// pixels[1023] = 1
+// Runs an infinite loop that listens to the keyboard input.
+// When a key is pressed (any key), the program blackens the screen,
+// i.e. writes "black" in every pixel;
+// the screen should remain fully black as long as the key is pressed. 
+// When no key is pressed, the program clears the screen, i.e. writes
+// "white" in every pixel;
+// the screen should remain fully clear as long as no key is pressed.
 
 (START)
     @SCREEN
@@ -25,15 +18,39 @@
     @i
     M=0     // i = 0
 
-(FILL)
-    @FILL	// TODO: useless garbage ?
+(LOOP)	
+    @KBD  // keyboard addr 
+    D=M     // D = keyboard register content
+    @FILL
+    D;JGT   // if keyboard register > 0
 
+(UNFILL)
+    // if i < 0, wait
+    @i
+    D=M
+    @LOOP
+    D;JLT
+
+    // else, unfill
+    @addr
+    A=M
+    M=0    // RAM[addr]=0
+    @i
+    M=M-1   // i = i - 1
+    @1
+    D=A
+    @addr
+    M=M-D   // addr = addr-1
+    @LOOP
+    0;JMP   // goto LOOP
+
+(FILL)
 	// if i>=n, wait
     @i
     D=M
     @n
-    D=D-M    	
-    @END
+    D=D-M    
+    @LOOP
     D;JGE
 
     // else, fill
@@ -41,14 +58,29 @@
     A=M
     M=1		// RAM[addr]=1
 
+	// check if incr needed or if over
+	// if i != n-1, increment i and addr
+    @n
+    D=M
+    @i
+    D=D-M
+	D=D-1			
+    @INC
+    D;JNE
+
+	// No increment needed
+	@LOOP
+	0;JMP	// goto LOOP
+
+(INC)
     @i
     M=M+1	// i = i + 1
     @1
     D=A
     @addr
     M=D+M	// addr = addr + 1
-    @FILL
-    0;JMP	// goto FILL
+    @LOOP
+    0;JMP	// goto LOOP
 
 (END)
 	@END

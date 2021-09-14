@@ -13,11 +13,13 @@ entity computer is
 	port (
 		reset : in std_logic;
 		clk : in std_logic;
+		dbg_keyboard_in : in std_logic_vector(0 to 15);
 		dbg_out_regs : out virtual_registers_array_t;
 		dbg_out_pc : out std_logic_vector(0 to 15);
 		dbg_out_d : out std_logic_vector(0 to 15);
 		dbg_out_a : out std_logic_vector(0 to 15);
-		dbg_out_screen : out screen_array_t
+		dbg_out_screen : out screen_array_t;		
+		dbg_keyboard_out : out std_logic_vector(0 to 15)
 	);
 end computer;
 
@@ -59,9 +61,11 @@ architecture rtl of computer is
 			load0 : in std_logic;
 			addr0 : in std_logic_vector(0 to 15);
 			clk : in std_logic; 
+			dbg_keyboard_in : in std_logic_vector(0 to 15);
 			out0 : out std_logic_vector(0 to 15);
 			dbg_out_regs : out virtual_registers_array_t;
-			dbg_out_screen : out screen_array_t
+			dbg_out_screen : out screen_array_t;
+			dbg_keyboard_out : out std_logic_vector(0 to 15)
 		);
 	end component;
 
@@ -97,9 +101,11 @@ begin
 		load0 => l_write_mem,
 		addr0 => l_addr_mem,
 		clk => clk,
+		dbg_keyboard_in => dbg_keyboard_in,
 		out0 => l_in_mem,
 		dbg_out_regs => dbg_out_regs,
-		dbg_out_screen => dbg_out_screen
+		dbg_out_screen => dbg_out_screen,
+		dbg_keyboard_out => dbg_keyboard_out
 	);
 
 end rtl;

@@ -71,6 +71,22 @@ void set_screen(int *pixels)
 }
 
 /**
+ * VHPIDIRECT set keyboard key.
+ */
+void set_keyboard(int reg) 
+{		
+	key_register = reg;
+}
+
+/**
+ * VHPIDIRECT set keyboard key.
+ */
+int get_keyboard(void) 
+{		
+	return keyboard_input;
+}
+
+/**
  * GHDL simulation thread running function.
  */
 static void * ghdl_simulation(void *arg)
@@ -97,7 +113,10 @@ static void * handle_keyboard_input(void *arg)
 
 	(void)arg; /* Unused. */
 
-	/* 500 ms timeout for getch. */
+	/* 500 ms timeout for getch, this create some important latency,
+	 * but it avoids key repeat delay on keyboard (if it's not > to 500 ms.
+	 * Without it we would have, key pressed... no key... and key pressed
+	 * again after delay. */
 	timeout(500);
 
 	while (1)
@@ -111,8 +130,6 @@ static void * handle_keyboard_input(void *arg)
 		{
 			keyboard_input = 0;
 		}		
-
-		// nanosleep(&ts, NULL);		
 	}
 
 	return NULL;
@@ -134,30 +151,6 @@ WINDOW *create_newwin(int height, int width, int starty, int startx)
 	wrefresh(local_win);
 
 	return local_win;
-}
-
-/**
- * Destroy an ncurses window.
- */
-void destroy_win(WINDOW *local_win)
-{	
-	/* box(local_win, ' ', ' '); : This won't produce the desired
-	 * result of erasing the window. It will leave it's four corners 
-	 * and so an ugly remnant of window. */
-	wborder(local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
-
-	/* The parameters taken are 
-	 * 1. win: the window on which to operate
-	 * 2. ls: character to be used for the left side of the window 
-	 * 3. rs: character to be used for the right side of the window 
-	 * 4. ts: character to be used for the top side of the window 
-	 * 5. bs: character to be used for the bottom side of the window 
-	 * 6. tl: character to be used for the top left corner of the window 
-	 * 7. tr: character to be used for the top right corner of the window 
-	 * 8. bl: character to be used for the bottom left corner of the window 
-	 * 9. br: character to be used for the bottom right corner of the window */
-	wrefresh(local_win);
-	delwin(local_win);
 }
 
 /**
@@ -214,7 +207,7 @@ int main(void)
 		mvwprintw(win_dbg, 1+0, 2,  "PC : %6d ", pc_register);
        	mvwprintw(win_dbg, 1+1, 2,  "A  : %6d ", a_register);
        	mvwprintw(win_dbg, 1+2, 2,  "D  : %6d ", d_register);
-       	mvwprintw(win_dbg, 1+3, 2,  "KEY: %6d ", keyboard_input); // TODO: should be keyboard register
+       	mvwprintw(win_dbg, 1+3, 2,  "KEY: %6d ", key_register);
        	mvwprintw(win_dbg, 1+0, 18, "R0 : %6d ", virtual_registers[0]);
        	mvwprintw(win_dbg, 1+1, 18, "R1 : %6d ", virtual_registers[1]);
        	mvwprintw(win_dbg, 1+2, 18, "R2 : %6d ", virtual_registers[2]);

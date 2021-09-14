@@ -25,9 +25,11 @@ entity memory is
 		load0 : in std_logic;
 		addr0 : in std_logic_vector(0 to 15);
 		clk : in std_logic; 
+		dbg_keyboard_in : in std_logic_vector(0 to 15);
 		out0 : out std_logic_vector(0 to 15);
 		dbg_out_regs : out virtual_registers_array_t;
-		dbg_out_screen : out screen_array_t
+		dbg_out_screen : out screen_array_t;
+		dbg_keyboard_out : out std_logic_vector(0 to 15)
 	);
 end memory;
 
@@ -51,6 +53,21 @@ architecture rtl of memory is
 			out0 : out std_logic_vector(0 to 15)
 		);
   	end component;
+		
+	component not_gate
+		port (
+			in0 : in std_logic; 			
+			out0 : out std_logic
+		);
+  	end component;		
+
+	component and_gate
+		port (
+			in0 : in std_logic;
+			in1 : in std_logic;
+			out0 : out std_logic
+		);
+	end component;
 
 	component ram16k_fast
 		port (
@@ -74,41 +91,91 @@ architecture rtl of memory is
 		);
 	end component;
 
-	--  Specifies which entity is bound with the components.
-	for ram16k_fast_0: ram16k_fast use entity work.ram16k_fast;
-	for screen_0: screen use entity work.screen;
-	-- for mux_gate_0: mux_gate use entity work.mux_gate;
-	for mux_gate_1: mux_gate use entity work.mux_gate;
-	for mux16_gate_0: mux16_gate use entity work.mux16_gate;
+	component keyboard
+		port (
+			dbg_in0 : in std_logic_vector(0 to 15);
+			dbg_load0 : in std_logic;		
+			clk : in std_logic; 
+			out0 : out std_logic_vector(0 to 15)
+		);
+	end component;
 
-	signal ram_out, screen_out, mux_out_out : std_logic_vector(0 to 15);
-	signal ram_load, screen_load, mux_out_load : std_logic;
-	signal sel_screen : std_logic;
+	signal is_screen_addr, is_keyboard_addr, is_ram_addr, is_not_keyboard_addr, is_not_screen_addr : std_logic;
+	signal addr_bit_1, addr_bit_2, not_addr_bit_1, not_addr_bit_2 : std_logic;
+	signal ram_out, screen_out, keyboard_out, keyboard_screen_out : std_logic_vector(0 to 15);
+	signal ram_load, screen_load: std_logic;
 
 begin	
 
-	sel_screen <= addr0(1);
+	-- Check if accessing RAM, screen or keyboard memory.
+	addr_bit_1 <= addr0(1);
+	addr_bit_2 <= addr0(2);
+
+	not_gate_0: not_gate port map (
+        in0 => addr_bit_1,
+        out0 => not_addr_bit_1
+    );
+
+	not_gate_1: not_gate port map (
+        in0 => addr_bit_2,
+        out0 => not_addr_bit_2
+    );
+
+	and_gate_0: and_gate port map (
+		in0 => addr_bit_1, 
+		in1 => addr_bit_2,
+		out0 => is_keyboard_addr
+	);
+
+	and_gate_1: and_gate port map (
+		in0 => addr_bit_1, 
+		in1 => not_addr_bit_2,
+		out0 => is_screen_addr
+	);
+
+	not_gate_2: not_gate port map (
+        in0 => is_keyboard_addr,
+        out0 => is_not_keyboard_addr
+    );
+
+	not_gate_3: not_gate port map (
+        in0 => is_screen_addr,
+        out0 => is_not_screen_addr
+    );
+
+	and_gate_2: and_gate port map (
+		in0 => is_not_keyboard_addr, 
+		in1 => is_not_screen_addr,
+		out0 => is_ram_addr
+	);
 
 	-- Load choice depending on input addr.
 	mux_gate_0: mux_gate port map (		
 		in0 => '0',
 		in1 => load0,
-		sel0 => sel_screen, 
+		sel0 => is_screen_addr, 
 		out0 => screen_load
 	);
 
 	mux_gate_1: mux_gate port map (		
-		in0 => load0,
-		in1 => '0',
-		sel0 => sel_screen, 
+		in0 => '0',
+		in1 => load0,
+		sel0 => is_ram_addr, 
 		out0 => ram_load
 	);
 	
 	-- Out choice depending on input addr.
 	mux16_gate_0: mux16_gate port map (		
-		in0 => ram_out,
-		in1 => screen_out,
-		sel0 => sel_screen, 
+		in0 => screen_out,
+		in1 => keyboard_out,
+		sel0 => is_keyboard_addr, 
+		out0 => keyboard_screen_out
+	);
+
+	mux16_gate_1: mux16_gate port map (		
+		in0 => keyboard_screen_out,
+		in1 => ram_out,
+		sel0 => is_ram_addr, 
 		out0 => out0
 	);
 
@@ -131,5 +198,15 @@ begin
 		out0 => screen_out,
 		dbg_out_screen => dbg_out_screen
 	);
+
+	-- Keyboard memory.
+	keyboard_0: keyboard port map (
+		dbg_in0 => dbg_keyboard_in,		
+		dbg_load0 => '1',		
+		clk => clk,
+		out0 => keyboard_out		
+	);
+
+	dbg_keyboard_out <= keyboard_out;
 
 end rtl;

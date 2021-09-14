@@ -13,7 +13,7 @@ architecture behaviour of computer_cosim is
 	type regs_array_t is array (0 to 15) of integer;
 	type pixels_array_t is array (0 to 1023) of integer;
 
-	constant clk_period : time := 10 ns;
+	constant clk_period : time := 1000 ns;
 	constant tick_period : time := 10 us;
 
 	-- VHPIDIRECT interface.
@@ -37,16 +37,26 @@ architecture behaviour of computer_cosim is
 	begin report "VHPIDIRECT set_screen" severity failure; end;
 	attribute foreign of set_screen : procedure is "VHPIDIRECT set_screen";
 
+	procedure set_keyboard (reg: integer) is
+	begin report "VHPIDIRECT set_screen" severity failure; end;
+	attribute foreign of set_keyboard : procedure is "VHPIDIRECT set_keyboard";
+
+	function get_keyboard return integer is
+	begin report "VHPIDIRECT custom_function" severity failure; end;
+	attribute foreign of get_keyboard : function is "VHPIDIRECT get_keyboard";
+
 	--  Declaration of the component that will be instantiated.
 	component computer
 		port (
 			reset : in std_logic;
 			clk : in std_logic;
+			dbg_keyboard_in : in std_logic_vector(0 to 15);
 			dbg_out_regs : out virtual_registers_array_t;
 			dbg_out_pc : out std_logic_vector(0 to 15);
 			dbg_out_d : out std_logic_vector(0 to 15);
 			dbg_out_a : out std_logic_vector(0 to 15);
-			dbg_out_screen : out screen_array_t
+			dbg_out_screen : out screen_array_t;			
+			dbg_keyboard_out : out std_logic_vector(0 to 15)
 		);
   	end component;
 
@@ -58,17 +68,21 @@ architecture behaviour of computer_cosim is
 	signal dbg_out_d : std_logic_vector(0 to 15);
 	signal dbg_out_a : std_logic_vector(0 to 15);
 	signal dbg_out_screen : screen_array_t;
+	signal dbg_keyboard_in : std_logic_vector(0 to 15) := "0000000000000000";
+	signal dbg_keyboard_out : std_logic_vector(0 to 15);	
 
 begin
 	--  Component instantiation.
 	computer_0: computer port map (
 		reset => reset,
 		clk => clk,
+		dbg_keyboard_in => dbg_keyboard_in,
 		dbg_out_regs => dbg_out_regs,
 		dbg_out_pc => dbg_out_pc,
 		dbg_out_d => dbg_out_d,
 		dbg_out_a => dbg_out_a,
-		dbg_out_screen => dbg_out_screen
+		dbg_out_screen => dbg_out_screen,		
+		dbg_keyboard_out => dbg_keyboard_out
 	);
 
 	-- Clock process definition.
@@ -102,6 +116,8 @@ begin
 	vhpi_process: process(clk)
 		variable regs_int_array: regs_array_t;
 		variable pixels_int_array: pixels_array_t;
+		variable current_key: integer := 0;
+		variable current_key_vector: std_logic_vector(0 to 15) := "0000000000000000";
 	begin
         if rising_edge(tick) then
 			-- Construct array of regs integer value.
@@ -120,7 +136,12 @@ begin
 			set_a_reg(to_integer(unsigned(dbg_out_a)));
 			set_d_reg(to_integer(unsigned(dbg_out_d)));
 			set_screen(pixels_int_array);
+			set_keyboard(to_integer(unsigned(dbg_keyboard_out)));
 
+			-- Retrieve current key from C interface.
+			current_key := get_keyboard;
+			current_key_vector := std_logic_vector(to_unsigned(current_key, current_key_vector'length));
+			dbg_keyboard_in <= current_key_vector;
 		end if;
 	end process;
 

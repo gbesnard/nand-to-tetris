@@ -21,22 +21,26 @@ architecture behaviour of computer_tb is
 		port (
 			reset : in std_logic;
 			clk : in std_logic;
+			dbg_keyboard_in : in std_logic_vector(0 to 15);
 			dbg_out_regs : out virtual_registers_array_t;
 			dbg_out_pc : out std_logic_vector(0 to 15);
 			dbg_out_d : out std_logic_vector(0 to 15);
 			dbg_out_a : out std_logic_vector(0 to 15);
-			dbg_out_screen : out screen_array_t
+			dbg_out_screen : out screen_array_t;
+			dbg_keyboard_out : out std_logic_vector(0 to 15)
 		);
   	end component;
 
 	--  Specifies which entity is bound with the component.
 	for computer_0: computer use entity work.computer;
 	signal reset, clk : std_logic;
+	signal dbg_keyboard_in : std_logic_vector(0 to 15);
 	signal dbg_out_regs : virtual_registers_array_t;
 	signal dbg_out_pc : std_logic_vector(0 to 15);
 	signal dbg_out_d : std_logic_vector(0 to 15);
 	signal dbg_out_a : std_logic_vector(0 to 15);
 	signal dbg_out_screen : screen_array_t;
+	signal dbg_keyboard_out : std_logic_vector(0 to 15);
 
 	--  Buffer for storing the text from input read-file.
     file input_buf : text;
@@ -46,11 +50,13 @@ begin
 	computer_0: computer port map (
 		reset => reset,
 		clk => clk,
+		dbg_keyboard_in => dbg_keyboard_in,
 		dbg_out_regs => dbg_out_regs,
 		dbg_out_pc => dbg_out_pc,
 		dbg_out_d => dbg_out_d,
 		dbg_out_a => dbg_out_a,
-		dbg_out_screen => dbg_out_screen
+		dbg_out_screen => dbg_out_screen,
+		dbg_keyboard_out => dbg_keyboard_out
 	);
 
 	-- Clock process definition.
